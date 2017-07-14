@@ -53,7 +53,10 @@ function (Note, createIntervalTree, rollStyle) {
 		 * the width of the scroll container
 		 */
 		this.width = 0;
-
+        /**
+         * duration of the score
+         */
+		this.duration = 0;
 		/**
 		 * The canvas which notes are drawn to
 		 * @type {Element}
@@ -119,6 +122,45 @@ function (Note, createIntervalTree, rollStyle) {
 		}
 		//set the width
 		this.width = duration * this.pixelsPerSecond + window.innerWidth * 2;
+		this.element.style.width = this.width;
+	};
+
+	Score.prototype.addNotes = function(notes){
+		this._currentNotes = this._currentNotes.concat(notes);
+		//this.clearNotes();
+		//get the min/max data
+		var minNote = Infinity;
+		var maxNote = -Infinity;
+        this._currentNotes.forEach(function(note){
+			if (note.midiNote > maxNote){
+				maxNote = note.midiNote;
+			}
+			if (note.midiNote < minNote){
+				minNote = note.midiNote;
+			}
+		});
+		//some padding
+		minNote -= 3;
+		maxNote += 3;
+		var noteHeight = this.element.offsetHeight / (maxNote - minNote);
+		var displayOptions = {
+			"min" : minNote,
+			"max" : maxNote,
+			"pixelsPerSecond" : this.pixelsPerSecond,
+			"noteHeight" : Math.round(noteHeight)
+		};
+		//this.intervalTree = new createIntervalTree();
+		var duration = -Infinity;
+		for (var i = 0; i < notes.length; i++){
+			var note = new Note(notes[i], displayOptions);
+			if (note.noteOff > duration){
+				duration = note.noteOff;
+			}
+			this.intervalTree.insert([note.noteOn, note.noteOff, note]);
+		}
+		//set the width
+		this.duration += duration;
+		this.width = this.duration * this.pixelsPerSecond + window.innerWidth * 2;
 		this.element.style.width = this.width;
 	};
 

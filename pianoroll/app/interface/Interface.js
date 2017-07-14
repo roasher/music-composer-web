@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(["style/interface.scss", "./SoundSelection", "./PlayButton", "mic/Microphone"], 
-function (interfaceStyle, SoundSelection, PlayButton, Microphone) {
+define(["style/interface.scss", "./SoundSelection", "./PlayButton", "mic/Microphone", "./AddNotes"],
+function (interfaceStyle, SoundSelection, PlayButton, Microphone, AddNotes) {
 
 	var Interface = function(container){
 
@@ -26,6 +26,7 @@ function (interfaceStyle, SoundSelection, PlayButton, Microphone) {
 		this._soundButtons = new SoundSelection(this._interface);
 
 		this._playButton = new PlayButton(this._interface);
+		this._addNotes = new AddNotes(this._interface);
 
 		this._microphone = new Microphone(this._interface, this._soundButtons.microphone);
 
@@ -35,6 +36,10 @@ function (interfaceStyle, SoundSelection, PlayButton, Microphone) {
 
 		this._onRec = function(){};
 	};
+
+	Interface.prototype.onAddNote = function(cb) {
+		this._addNotes.onAddNote = cb;
+	}
 
 	Interface.prototype.onPlay = function(cb){
 		this._playButton.onPlay = cb;
@@ -46,6 +51,10 @@ function (interfaceStyle, SoundSelection, PlayButton, Microphone) {
 
 	Interface.prototype.onScore = function(cb){
 		this._playButton.onScore = cb;
+	};
+
+	Interface.prototype.onAddNotes = function(cb) {
+		this._addNotes.onAddNotes = cb;
 	};
 
 	Interface.prototype.onRecord = function(cb){

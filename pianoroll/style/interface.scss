@@ -152,6 +152,14 @@ $ButtonMargin: 20px;
 		margin-left: -$ButtonSize/2;
 	}
 
+	#addNotes {
+		font-size: $ButtonSize;
+		position: absolute;
+		bottom: $ButtonMargin;
+		left: 70%;
+		margin-left: -$ButtonSize/2;
+	}
+
 	$SmallButton : $ButtonSize/2;
 	.ScoreButton {
 		position: absolute;

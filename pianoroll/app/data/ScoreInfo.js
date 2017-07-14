@@ -30,5 +30,9 @@ define({
 	satie : {
 		composer : "Erik Satie",
 		name : "Gymnopédie No.1"
+	},
+	preludeInCshort : {
+		compose: "J.S. Bach",
+		name: "Prelude in C short"
 	}
 });

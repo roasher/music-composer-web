@@ -173,6 +173,18 @@ function (Score, Transport, rollStyle, Scroll) {
 		this._onScreenNotes();
 	};
 
+	Roll.prototype.addNotes = function(json){
+		Transport.bpm.value = json.header.tempo;
+		Transport.timeSignature = json.header.timeSignature;
+		//set the notes
+		this._score.addNotes(json.notes);
+		//show the first notes initially
+		var width = this._scrollContainer.offsetWidth;
+		this._currentScroll =  width / 2 - 3;
+		this._scrollContainer.scrollLeft = this._currentScroll;
+		this._onScreenNotes();
+	};
+
 	Roll.prototype.start = function(){
 		this._computeStartTime();
 		this._scroll.start();

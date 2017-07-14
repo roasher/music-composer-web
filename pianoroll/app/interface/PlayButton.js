@@ -101,7 +101,7 @@ define(["style/interface.scss", "data/Scores", "data/ScoreInfo", "Tone/core/Tran
 		var info = ScoreInfo[name];
 		var loader = new Loader("score", info);
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "./midi/" + name + ".json");
+		xhr.open("GET", "./midi/" + name + ".json" + "&random=" + Math.random());
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {

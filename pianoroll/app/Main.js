@@ -15,8 +15,9 @@
  */
 
 require(["domready", "roll/Roll", "sound/Player", "interface/Interface", "Tone/core/Transport", 
-	"midi/preludeInC.json", "StartAudioContext", "style/main.scss", "Tone/core/Tone", "interface/Orientation"], 
-function(domReady, Roll, Player, Interface, Transport, preludeInC, 
+	"midi/preludeInC.json", "midi/preludeInCshort.json", "StartAudioContext", "style/main.scss", "Tone/core/Tone",
+		"interface/Orientation"],
+function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCshort,
 	StartAudioContext, mainStyle, Tone, Orientation){
 
 	domReady(function(){
@@ -29,8 +30,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC,
 		var interface = new Interface(document.body);
 
 		//set the first score
-		roll.setScore(preludeInC);
-
+		roll.setScore(preludeInCshort);
 		/**
 		 * EVENTS
 		 */
@@ -47,6 +47,9 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC,
 		});
 		interface.onScore(function(json){
 			roll.setScore(json);
+		});
+		interface.onAddNotes(function(json) {
+			roll.addNotes(json);
 		});
 
 		var wasPlaying = false;
