@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-define(["./Score", "Tone/core/Transport", "style/roll.scss", "./Scroll"], 
+define(["./Score", "Tone/core/Transport", "style/roll.scss", "./Scroll"],
 function (Score, Transport, rollStyle, Scroll) {
 
 	/**
 	 *  the amount of time that notes are processed ahead of time.
-	 *  This improves the performance and accuracy of scheduled notes. 
+	 *  This improves the performance and accuracy of scheduled notes.
 	 */
 	var lookAhead = 0.05;
 
@@ -118,8 +118,12 @@ function (Score, Transport, rollStyle, Scroll) {
 	 */
 	Roll.prototype._onScreenNotes  = function(){
 		var width = this._width;
-		// var notes = this._score.showOnScreenNotes(this._currentScroll - width/2, this._currentScroll + width/2);
-		var notes = this._score.showOnScreenNotes(this._currentScroll - width, this._currentScroll);
+		// this._score.showOnScreenNotes(this._currentScroll - width/2, this._currentScroll + width/2);
+		this._score.showOnScreenNotes(this._currentScroll - width, this._currentScroll);
+        var notesFromTo = this._score.getNotesFromTo(this._currentScroll - width/4, this._currentScroll);
+        if (notesFromTo && notesFromTo.length === 0) {
+            loadMoreNotes(Math.floor(Math.random() * 10000000000000001), 1);
+		}
 		var triggerLineNotes = this._score.getTriggerLine(this._currentScroll - width / 2 - 1);
 		if (triggerLineNotes){
 			//compare it to the last one and get the note attacks and releases
@@ -139,6 +143,22 @@ function (Score, Transport, rollStyle, Scroll) {
 			this._currentNotes = triggerLineNotes;
 		}
 	};
+
+	var loadMoreNotes = function (compositionId, numberOfBars) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    this.onAddNotes(json);
+                } else {
+                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+                }
+            }
+        }.bind(this);
+        xhr.send(null);
+    };
 
 	Roll.prototype._loop = function(){
 		requestAnimationFrame(this._bindedLoop);

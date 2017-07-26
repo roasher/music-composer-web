@@ -208,6 +208,18 @@ function (Note, createIntervalTree, rollStyle) {
 		}
 	};
 
+    Score.prototype.getNotesFromTo = function(from, to){
+        var fromSeconds = from / this.pixelsPerSecond;
+        var toSeconds = to / this.pixelsPerSecond;
+        if (this.intervalTree !== null){
+            var notes = [];
+            this.intervalTree.queryInterval(fromSeconds, toSeconds, function(res){
+                notes.push(res[2]);
+            });
+            return notes;
+        }
+    };
+
 	/**
 	 *  get the note attacks between 'from' and 'to' PIXELS!
 	 *  @return  {Array}
