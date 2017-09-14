@@ -79,6 +79,9 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
 		//a binding of the loop
 		this._bindedLoop = this._loop.bind(this);
 
+		// session
+        this.sessionId = Math.floor(Math.random() * 10000000000000001)
+
 		//start the loop
 		this._loop();
 
@@ -121,8 +124,8 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
 		// this._score.showOnScreenNotes(this._currentScroll - width/2, this._currentScroll + width/2);
 		this._score.showOnScreenNotes(this._currentScroll - width, this._currentScroll);
         var notesFromTo = this._score.getNotesFromTo(this._currentScroll - width/4, this._currentScroll);
-        if (notesFromTo && notesFromTo.length < 2 && notesFromTo.length > 0) {
-            this.loadMoreNotes(Math.floor(Math.random() * 10000000000000001), 1);
+        if (notesFromTo && notesFromTo.length < 10 ) {
+            this.loadMoreNotes(this.sessionId, 1);
 		}
 		var triggerLineNotes = this._score.getTriggerLine(this._currentScroll - width / 2 - 1);
 		if (triggerLineNotes){
@@ -151,7 +154,7 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     var json = JSON.parse(xhr.responseText);
-                    this.onAddNotes(json);
+                    this.addNotes(json);
                 } else {
                     console.log('Error: ' + xhr.status); // An error occurred during the request.
                 }
