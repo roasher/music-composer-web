@@ -75,6 +75,9 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		roll.onstop = function(){
 			player.releaseAll();
 		};
+		roll.onAddNotes = function(json) {
+			roll.addNotes(json);
+		};
 
 		var orientation = new Orientation(function(){
 			//called when stopped

@@ -98,6 +98,7 @@ define(["style/interface.scss", "data/Scores", "data/ScoreInfo", "Tone/core/Tran
                     if (xhr.status === 200) {
                         var json = JSON.parse(xhr.responseText);
                         this.onAddNotes(json);
+                        console.log('addNote done');
                     } else {
                         console.log('Error: ' + xhr.status); // An error occurred during the request.
                     }

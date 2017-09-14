@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(["./Score", "Tone/core/Transport", "style/roll.scss", "./Scroll"],
-function (Score, Transport, rollStyle, Scroll) {
+define(["./Score", "Tone/core/Transport", "style/roll.scss", "./Scroll", "../interface/AddNotes"],
+function (Score, Transport, rollStyle, Scroll, AddNotes) {
 
 	/**
 	 *  the amount of time that notes are processed ahead of time.
@@ -121,8 +121,8 @@ function (Score, Transport, rollStyle, Scroll) {
 		// this._score.showOnScreenNotes(this._currentScroll - width/2, this._currentScroll + width/2);
 		this._score.showOnScreenNotes(this._currentScroll - width, this._currentScroll);
         var notesFromTo = this._score.getNotesFromTo(this._currentScroll - width/4, this._currentScroll);
-        if (notesFromTo && notesFromTo.length === 0) {
-            loadMoreNotes(Math.floor(Math.random() * 10000000000000001), 1);
+        if (notesFromTo && notesFromTo.length < 2 && notesFromTo.length > 0) {
+            this.loadMoreNotes(Math.floor(Math.random() * 10000000000000001), 1);
 		}
 		var triggerLineNotes = this._score.getTriggerLine(this._currentScroll - width / 2 - 1);
 		if (triggerLineNotes){
@@ -144,7 +144,7 @@ function (Score, Transport, rollStyle, Scroll) {
 		}
 	};
 
-	var loadMoreNotes = function (compositionId, numberOfBars) {
+	Roll.prototype.loadMoreNotes = function (compositionId, numberOfBars) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);
         xhr.onreadystatechange = function () {
