@@ -120,32 +120,34 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
 	 * Draw the currently on screen notes
 	 */
 	Roll.prototype._onScreenNotes  = function(){
-		var width = this._width;
 		// this._score.showOnScreenNotes(this._currentScroll - width/2, this._currentScroll + width/2);
-		this._score.showOnScreenNotes(this._currentScroll - width, this._currentScroll);
-        var notesFromTo = this._score.getNotesFromTo(this._currentScroll - width/4, this._currentScroll);
-        if (notesFromTo && notesFromTo.length < 10 ) {
+		this._score.showOnScreenNotes(this._currentScroll - this._width, this._currentScroll);
+        var notesFromTo = this._score.getNotesFromTo(this._currentScroll - this._width/4, this._currentScroll);
+        if (notesFromTo && notesFromTo.length === 0 ) {
             this.loadMoreNotes(this.sessionId, 1);
 		}
-		var triggerLineNotes = this._score.getTriggerLine(this._currentScroll - width / 2 - 1);
-		if (triggerLineNotes){
-			//compare it to the last one and get the note attacks and releases
-			for (var i = 0; i < triggerLineNotes.length; i++){
-				if (this._currentNotes.indexOf(triggerLineNotes[i]) === -1){
-					var note = triggerLineNotes[i];
-					if (this._scrubbing){
-						this.onnote(note.note, 0.1, "+0.05", note.velocity);
-						note.triggerAttackRelease(0.1, "+0.05", note.velocity);
-					} else {
-						var startTime = this._computedStartTime + note.noteOn + lookAhead;
-						this.onnote(note.note, note.duration, startTime, note.velocity);
-						note.triggerAttackRelease(note.duration, startTime, note.velocity);
-					}
-				}
-			}
-			this._currentNotes = triggerLineNotes;
-		}
 	};
+
+	Roll.prototype.playOnScreenNotes = function () {
+        var triggerLineNotes = this._score.getTriggerLine(this._currentScroll - this._width / 2 - 1);
+        if (triggerLineNotes){
+            //compare it to the last one and get the note attacks and releases
+            for (var i = 0; i < triggerLineNotes.length; i++){
+                if (this._currentNotes.indexOf(triggerLineNotes[i]) === -1){
+                    var note = triggerLineNotes[i];
+                    if (this._scrubbing){
+                        this.onnote(note.note, 0.1, "+0.05", note.velocity);
+                        note.triggerAttackRelease(0.1, "+0.05", note.velocity);
+                    } else {
+                        var startTime = this._computedStartTime + note.noteOn + lookAhead;
+                        this.onnote(note.note, note.duration, startTime, note.velocity);
+                        note.triggerAttackRelease(note.duration, startTime, note.velocity);
+                    }
+                }
+            }
+            this._currentNotes = triggerLineNotes;
+        }
+    };
 
 	Roll.prototype.loadMoreNotes = function (compositionId, numberOfBars) {
         var xhr = new XMLHttpRequest();
@@ -176,6 +178,7 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
 		if (scrollLeft !== this._currentScroll){
 			this._currentScroll = scrollLeft;
 			this._onScreenNotes();
+			this.playOnScreenNotes();
 		}
 		//draw all of the notes
 		this._score.draw(this._currentScroll - this._width);
