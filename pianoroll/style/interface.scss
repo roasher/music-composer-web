@@ -160,6 +160,42 @@ $ButtonMargin: 20px;
 		margin-left: -$ButtonSize/2;
 	}
 
+	#composerAdjustPanel {
+		position: fixed;
+		bottom: $SynthControlsHeight;
+		left: 0px;
+		width: 10%;
+		height: 0px;
+		z-index: 100;
+
+		#selectVoice1 {
+			position: absolute;
+			bottom: $ButtonMargin;
+			left: 80%;
+		}
+
+		#selectVoice2 {
+			position: absolute;
+			bottom: $ButtonMargin;
+			left: 75%;
+			margin-left: -$ButtonSize/2;
+		}
+
+		#selectVoice3 {
+			position: absolute;
+			bottom: $ButtonMargin;
+			left: 70%;
+			margin-left: -$ButtonSize/2;
+		}
+
+		#selectVoice4 {
+			position: absolute;
+			bottom: $ButtonMargin;
+			left: 65%;
+			margin-left: -$ButtonSize/2;
+		}
+	}
+
 	$SmallButton : $ButtonSize/2;
 	.ScoreButton {
 		position: absolute;
