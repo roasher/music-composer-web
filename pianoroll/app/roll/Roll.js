@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(["./Score", "Tone/core/Transport", "style/roll.scss", "./Scroll", "../interface/AddNotes"],
-function (Score, Transport, rollStyle, Scroll, AddNotes) {
+define(["./Score", "Tone/core/Transport", "style/roll.scss", "./Scroll"],
+function (Score, Transport, rollStyle, Scroll) {
 
 	/**
 	 *  the amount of time that notes are processed ahead of time.
@@ -76,11 +76,13 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
 		this.onnote = function(){};
 		this.onstop = function(){};
 
+		this.getVoiceRanges = function () {};
+
 		//a binding of the loop
 		this._bindedLoop = this._loop.bind(this);
 
 		// session
-        this.sessionId = Math.floor(Math.random() * 10000000000000001)
+        this.sessionId = Math.floor(Math.random() * 10000000000000001);
 
 		//start the loop
 		this._loop();
@@ -150,6 +152,7 @@ function (Score, Transport, rollStyle, Scroll, AddNotes) {
     };
 
 	Roll.prototype.loadMoreNotes = function (compositionId, numberOfBars) {
+        console.log("Having Ranges", this.getVoiceRanges());
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);
         xhr.onreadystatechange = function () {
