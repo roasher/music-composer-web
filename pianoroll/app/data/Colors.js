@@ -44,9 +44,9 @@ define(function(){
 		"Bb" : "#45b5a1",
 		"B" : "#4598b6",
 
-		"selectVoiceRanges1":"#08b6ab",
-        "selectVoiceRanges2":"#1a8fb6",
-        "selectVoiceRanges3":"#3c67b6",
-        "selectVoiceRanges4":"#423bb6",
+		"firstVoiceRange":"#460741",
+        "secondVoiceRange":"#140f37",
+        "altoVoiceRange":"#0f2f33",
+        "bassVoiceRange":"#1e3c14",
 	};
 });

@@ -264,11 +264,11 @@ function (Note, createIntervalTree, rollStyle, RangeLine) {
 			var n = notes[i];
 			n.draw(this.context);
 		}
+		this.context.restore();
         for (var rangeLineNumber = 0; rangeLineNumber < this.rangeLines.length; rangeLineNumber++){
             var currentRangeLine = this.rangeLines[rangeLineNumber];
-            currentRangeLine.draw(this.context);
+            currentRangeLine.draw(this.context, rangeLineNumber * 40, this.canvasWidth);
         }
-		this.context.restore();
 	};
 
 	return Score;
