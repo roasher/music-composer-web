@@ -16,15 +16,21 @@ define(["./NoteSelector", "../fileplayer/Range"],
             this._submitButton.classList.add("Button");
             this._composerAdjustPanel.appendChild(this._submitButton);
             this._submitButton.addEventListener("click", this._confirmAdjustment.bind(this));
+
+            // callback
+            this.doOnConfirmAdjustment = function () {}
         };
 
         composerAdjustPanel.prototype._confirmAdjustment = function () {
             this.selectVoice.forEach(function (selectVoice) { selectVoice.saveSelectedValues() })
+            this.doOnConfirmAdjustment(this.getRanges());
         };
 
         composerAdjustPanel.prototype.getRanges = function () {
           var ranges = [];
-          this.selectVoice.forEach(function (selectVoice) { ranges.push(selectVoice.lastSavedRange) })
+          for (var selectVoiceNumber = 0; selectVoiceNumber < this.selectVoice.length; selectVoiceNumber++ ) {
+              ranges.push(this.selectVoice[selectVoiceNumber]);
+          }
           return ranges;
         };
 

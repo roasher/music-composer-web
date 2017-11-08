@@ -30,7 +30,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		var interface = new Interface(document.body);
 
 		//set the first score
-		roll.setScore(preludeInCshort);
+		roll.setScore(preludeInC);
 		/**
 		 * EVENTS
 		 */
@@ -51,6 +51,10 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		interface.onAddNotes(function(json) {
 			roll.addNotes(json);
 		});
+		interface.doOnConfirmAdjustment(function (rangeLines) {
+			roll.setRangeLines(rangeLines);
+        });
+		interface.confirmAdjustment();
 
 		var wasPlaying = false;
 		interface.onRecord(function(recording){
@@ -75,9 +79,6 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		roll.onstop = function(){
 			player.releaseAll();
 		};
-		roll.getVoiceRanges = function () {
-			return interface._composerAdjustPanel.getRanges();
-        };
 
 		var orientation = new Orientation(function(){
 			//called when stopped
@@ -85,7 +86,6 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 			roll.stop();
 			interface.stop();
 		});
-
 		window.parent.postMessage("loaded", "*");
 
 		//send the ready message to the parent

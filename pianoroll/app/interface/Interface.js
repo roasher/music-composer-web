@@ -38,6 +38,14 @@ function (interfaceStyle, SoundSelection, PlayButton, Microphone, AddNotes, Comp
 		this._onRec = function(){};
 	};
 
+	Interface.prototype.doOnConfirmAdjustment = function (cb) {
+		this._composerAdjustPanel.doOnConfirmAdjustment = cb;
+    };
+
+	Interface.prototype.confirmAdjustment = function () {
+		this._composerAdjustPanel._confirmAdjustment();
+    };
+
 	Interface.prototype.onAddNote = function(cb) {
 		this._addNotes.onAddNote = cb;
 	};

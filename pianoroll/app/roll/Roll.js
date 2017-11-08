@@ -76,8 +76,6 @@ function (Score, Transport, rollStyle, Scroll) {
 		this.onnote = function(){};
 		this.onstop = function(){};
 
-		this.getVoiceRanges = function () {};
-
 		//a binding of the loop
 		this._bindedLoop = this._loop.bind(this);
 
@@ -94,6 +92,10 @@ function (Score, Transport, rollStyle, Scroll) {
 		//set the lookahead to match the other one
 		// Transport._clock.lookAhead = lookAhead;
 	};
+
+    Roll.prototype.setRangeLines = function (rangeLines) {
+        this._score.setRangeLines(rangeLines)
+    };
 
 	Roll.prototype._resize = function(){
 		this._width = this._scrollContainer.offsetWidth;
@@ -152,7 +154,7 @@ function (Score, Transport, rollStyle, Scroll) {
     };
 
 	Roll.prototype.loadMoreNotes = function (compositionId, numberOfBars) {
-        console.log("Having Ranges", this.getVoiceRanges());
+        console.log("Having Ranges", this._score.rangeLines);
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);
         xhr.onreadystatechange = function () {

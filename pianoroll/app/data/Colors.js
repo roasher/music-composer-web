@@ -43,5 +43,10 @@ define(function(){
 		"A#" : "#45b5a1",
 		"Bb" : "#45b5a1",
 		"B" : "#4598b6",
+
+		"selectVoiceRanges1":"#08b6ab",
+        "selectVoiceRanges2":"#1a8fb6",
+        "selectVoiceRanges3":"#3c67b6",
+        "selectVoiceRanges4":"#423bb6",
 	};
 });

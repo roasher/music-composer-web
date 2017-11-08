@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(["roll/Note", "interval-tree-1d", "style/roll.scss"], 
-function (Note, createIntervalTree, rollStyle) {
+define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
+function (Note, createIntervalTree, rollStyle, RangeLine) {
 	
 	/**
 	 *  Parses the score JSON into note on/off events
@@ -57,6 +57,10 @@ function (Note, createIntervalTree, rollStyle) {
          * duration of the score
          */
 		this.duration = 0;
+        /**
+		 * Range lines
+         */
+        this.rangeLines = [];
 		/**
 		 * The canvas which notes are drawn to
 		 * @type {Element}
@@ -84,33 +88,46 @@ function (Note, createIntervalTree, rollStyle) {
 	 */
 	Score.prototype.pixelsPerSecond = 100;
 
-	/**
+    Score.prototype.getDisplayOptions = function(notes) {
+		//get the min/max data
+        var minNote = Infinity;
+        var maxNote = -Infinity;
+        notes.forEach(function (note) {
+            if (note.midiNote > maxNote) {
+                maxNote = note.midiNote;
+            }
+            if (note.midiNote < minNote) {
+                minNote = note.midiNote;
+            }
+        });
+        //some padding
+        minNote -= 3;
+        maxNote += 3;
+        var noteHeight = this.element.offsetHeight / (maxNote - minNote);
+        var displayOptions = {
+            "min": minNote,
+            "max": maxNote,
+            "pixelsPerSecond": this.pixelsPerSecond,
+            "noteHeight": Math.round(noteHeight)
+        };
+        return displayOptions;
+    };
+
+    Score.prototype.setRangeLines = function (rangeLines) {
+    	var displayOptions = this.getDisplayOptions(this._currentNotes);
+        this.rangeLines = [];
+		for (var lineNumber = 0; lineNumber < rangeLines.length; lineNumber ++) {
+            this.rangeLines.push(new RangeLine(rangeLines[lineNumber], displayOptions))
+        }
+    };
+
+    /**
 	 *  Set the array of notes
 	 */
 	Score.prototype.setNotes = function(notes){
 		this._currentNotes = notes;
 		this.clearNotes();
-		//get the min/max data
-		var minNote = Infinity;
-		var maxNote = -Infinity;
-		notes.forEach(function(note){
-			if (note.midiNote > maxNote){
-				maxNote = note.midiNote;
-			} 
-			if (note.midiNote < minNote){
-				minNote = note.midiNote;
-			}
-		});
-		//some padding
-		minNote -= 3;
-		maxNote += 3;
-		var noteHeight = this.element.offsetHeight / (maxNote - minNote);
-		var displayOptions = {
-			"min" : minNote,
-			"max" : maxNote,
-			"pixelsPerSecond" : this.pixelsPerSecond,
-			"noteHeight" : Math.round(noteHeight)
-		};
+        var displayOptions = this.getDisplayOptions(notes);
 		this.intervalTree = new createIntervalTree();
 		var duration = -Infinity;
 		for (var i = 0; i < notes.length; i++){
@@ -128,27 +145,7 @@ function (Note, createIntervalTree, rollStyle) {
 	Score.prototype.addNotes = function(notes){
 		this._currentNotes = this._currentNotes.concat(notes);
 		//this.clearNotes();
-		//get the min/max data
-		var minNote = Infinity;
-		var maxNote = -Infinity;
-        this._currentNotes.forEach(function(note){
-			if (note.midiNote > maxNote){
-				maxNote = note.midiNote;
-			}
-			if (note.midiNote < minNote){
-				minNote = note.midiNote;
-			}
-		});
-		//some padding
-		minNote -= 3;
-		maxNote += 3;
-		var noteHeight = this.element.offsetHeight / (maxNote - minNote);
-		var displayOptions = {
-			"min" : minNote,
-			"max" : maxNote,
-			"pixelsPerSecond" : this.pixelsPerSecond,
-			"noteHeight" : Math.round(noteHeight)
-		};
+		var displayOptions = this.getDisplayOptions(notes);
 		//this.intervalTree = new createIntervalTree();
 		var duration = -Infinity;
 		for (var i = 0; i < notes.length; i++){
@@ -267,6 +264,10 @@ function (Note, createIntervalTree, rollStyle) {
 			var n = notes[i];
 			n.draw(this.context);
 		}
+        for (var rangeLineNumber = 0; rangeLineNumber < this.rangeLines.length; rangeLineNumber++){
+            var currentRangeLine = this.rangeLines[rangeLineNumber];
+            currentRangeLine.draw(this.context);
+        }
 		this.context.restore();
 	};
 
