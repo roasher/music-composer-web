@@ -30,7 +30,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		var interface = new Interface(document.body);
 
 		//set the first score
-		roll.setScore(preludeInC);
+		roll.setScore(preludeInCshort);
 		/**
 		 * EVENTS
 		 */

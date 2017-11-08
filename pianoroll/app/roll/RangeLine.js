@@ -5,7 +5,6 @@ define(["data/Colors"],
 
             this.id = rangeLine.voice.id
             this.color = Colors[this.id];
-            this.height = displayOptions.noteHeight - 2;
 
             // first note
             var lowerNote = rangeLine.lastSavedRange.lowerNote;
@@ -20,7 +19,7 @@ define(["data/Colors"],
             this.top2 = top2 * 2;
         };
 
-        RangeLine.prototype.draw = function (context, left, right) {
+        RangeLine.prototype.draw = function (context, coordinateOfLegend, right) {
             context.beginPath();
             context.fillStyle = "black";
 
@@ -36,8 +35,8 @@ define(["data/Colors"],
             context.stroke();
 
             context.fillStyle = Colors[this.id];
-            context.fillText(this.id, left, this.top1);
-            context.fillText(this.id, left, this.top2);
+            context.fillText(this.id, coordinateOfLegend, this.top1);
+            context.fillText(this.id, coordinateOfLegend, this.top2);
         };
 
         return RangeLine;
