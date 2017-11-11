@@ -5,10 +5,10 @@ define(["./NoteSelector", "../fileplayer/Range"],
             this._composerAdjustPanel.id = "composerAdjustPanel";
             container.appendChild(this._composerAdjustPanel);
             this.selectVoice = [];
-            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "firstVoiceRange", new Range(60, 84)));
-            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "secondVoiceRange", new Range(53, 77)));
-            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "altoVoiceRange", new Range(45, 69)));
-            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "bassVoiceRange", new Range(41, 65)));
+            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "firstVoiceRange", new Range(60, 84), 0));
+            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "secondVoiceRange", new Range(53, 77), 1));
+            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "altoVoiceRange", new Range(45, 69), 2));
+            this.selectVoice.push(new NoteSelector(this._composerAdjustPanel, "bassVoiceRange", new Range(41, 65), 3));
 
             // submit button
             this._submitButton = document.createElement("div");

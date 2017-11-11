@@ -3,18 +3,18 @@ define(["data/Colors"],
 
         var RangeLine = function (rangeLine, displayOptions) {
 
-            this.id = rangeLine.voice.id
-            this.color = Colors[this.id];
+            this.id = rangeLine.voice.id;
+            this.color = Colors[rangeLine.partNumber];
 
             // first note
-            var lowerNote = rangeLine.lastSavedRange.lowerNote;
-            var top1 =  (displayOptions.max - displayOptions.min) * (1 - (lowerNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
+            this.lowerNote = rangeLine.lastSavedRange.lowerNote;
+            var top1 =  (displayOptions.max - displayOptions.min) * (1 - (this.lowerNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
             top1 *=  displayOptions.noteHeight - 2;
             this.top1 = top1 * 2;
 
             // second note
-            var upperNote = rangeLine.lastSavedRange.upperNote;
-            var top2 =  (displayOptions.max - displayOptions.min) * (1 - (upperNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
+            this.upperNote = rangeLine.lastSavedRange.upperNote;
+            var top2 =  (displayOptions.max - displayOptions.min) * (1 - (this.upperNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
             top2 *=  displayOptions.noteHeight - 2;
             this.top2 = top2 * 2;
         };

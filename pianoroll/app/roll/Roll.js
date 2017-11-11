@@ -83,7 +83,7 @@ function (Score, Transport, rollStyle, Scroll) {
         this.sessionId = Math.floor(Math.random() * 10000000000000001);
 
 		//start the loop
-		this._loop();
+		// this._loop();
 
 		this._width = this._scrollContainer.offsetWidth;
 
@@ -126,10 +126,6 @@ function (Score, Transport, rollStyle, Scroll) {
 	Roll.prototype._onScreenNotes  = function(){
 		// this._score.showOnScreenNotes(this._currentScroll - width/2, this._currentScroll + width/2);
 		this._score.showOnScreenNotes(this._currentScroll - this._width, this._currentScroll);
-        var notesFromTo = this._score.getNotesFromTo(this._currentScroll - this._width/4, this._currentScroll);
-        if (notesFromTo && notesFromTo.length === 0 ) {
-            this.loadMoreNotes(this.sessionId, 1);
-		}
 	};
 
 	Roll.prototype.playOnScreenNotes = function () {
@@ -154,9 +150,11 @@ function (Score, Transport, rollStyle, Scroll) {
     };
 
 	Roll.prototype.loadMoreNotes = function (compositionId, numberOfBars) {
-        console.log("Having Ranges", this._score.rangeLines);
+        let bachChoralVoiceRangeDTO = this._score.getBachChoralVoiceRangeDTO();
+        console.log("Having Ranges", bachChoralVoiceRangeDTO);
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);
+        xhr.open("POST", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);;
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -167,7 +165,7 @@ function (Score, Transport, rollStyle, Scroll) {
                 }
             }
         }.bind(this);
-        xhr.send(null);
+        xhr.send(JSON.stringify(bachChoralVoiceRangeDTO));
     };
 
 	Roll.prototype._loop = function(){
@@ -184,6 +182,12 @@ function (Score, Transport, rollStyle, Scroll) {
 			this._currentScroll = scrollLeft;
 			this._onScreenNotes();
 			this.playOnScreenNotes();
+
+			// see if we need to load more notes
+            var notesFromTo = this._score.getNotesFromTo(this._currentScroll - this._width/4, this._currentScroll);
+            if (notesFromTo && notesFromTo.length === 0 ) {
+                this.loadMoreNotes(this.sessionId, 1);
+            }
 		}
 		//draw all of the notes
 		this._score.draw(this._currentScroll - this._width);

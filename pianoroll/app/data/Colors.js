@@ -48,5 +48,10 @@ define(function(){
         "secondVoiceRange":"#140f37",
         "altoVoiceRange":"#0f2f33",
         "bassVoiceRange":"#1e3c14",
+
+		0: "#4e61d8",
+		1: "#a542b1",
+		2: "#f75839",
+		3: "#f6e422"
 	};
 });

@@ -34,7 +34,8 @@ define(["Tone/core/Transport", "data/Colors"], function (Transport, Colors){
 		/**
 		 * The notes color
 		 */
-		this.color = Colors[noteName];
+		// this.color = Colors[noteName];
+		this.color = Colors[noteDescription.partNumber];
 
 		/**
 		 *  the note name

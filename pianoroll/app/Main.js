@@ -29,8 +29,6 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 
 		var interface = new Interface(document.body);
 
-		//set the first score
-		roll.setScore(preludeInCshort);
 		/**
 		 * EVENTS
 		 */
@@ -54,7 +52,6 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		interface.doOnConfirmAdjustment(function (rangeLines) {
 			roll.setRangeLines(rangeLines);
         });
-		interface.confirmAdjustment();
 
 		var wasPlaying = false;
 		interface.onRecord(function(recording){
@@ -110,5 +107,10 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 			window.parent.postMessage("ready","*");
 		}
 
+        // ------ initializing ----------
+        roll.setScore(preludeInCshort);
+        interface.confirmAdjustment();
+        roll._loop();
+        // ------ initialization finished ----------
 	});
 });
