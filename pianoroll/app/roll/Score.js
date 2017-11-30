@@ -92,11 +92,11 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             //get the min/max data
             var minNote = Infinity;
             var maxNote = -Infinity;
-            notes.forEach(function (note) {
-                if (note.midiNote > maxNote) {
+            this.rangeLines.forEach(function (rangeLine) {
+                if (rangeLine.lastSavedRange.upperNote > maxNote) {
                     maxNote = note.midiNote;
                 }
-                if (note.midiNote < minNote) {
+                if (rangeLine.lastSavedRange.lowerNote < minNote) {
                     minNote = note.midiNote;
                 }
             });

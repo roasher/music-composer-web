@@ -108,7 +108,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		}
 
         // ------ initializing ----------
-        roll.setScore(preludeInCshort);
+        // roll.setScore(preludeInCshort);
         interface.confirmAdjustment();
         roll._loop();
         // ------ initialization finished ----------

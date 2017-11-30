@@ -81,6 +81,7 @@ function (Score, Transport, rollStyle, Scroll) {
 
 		// session
         this.sessionId = Math.floor(Math.random() * 10000000000000001);
+        this.numberOfBarsToLoad = 1;
 
 		//start the loop
 		// this._loop();
@@ -149,11 +150,11 @@ function (Score, Transport, rollStyle, Scroll) {
         }
     };
 
-	Roll.prototype.loadMoreNotes = function (compositionId, numberOfBars) {
+	Roll.prototype.loadMoreNotes = function () {
         let bachChoralVoiceRangeDTO = this._score.getBachChoralVoiceRangeDTO();
         console.log("Having Ranges", bachChoralVoiceRangeDTO);
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=" + numberOfBars);;
+        xhr.open("POST", "http://localhost:8888/getBars?compositionId=" + this.sessionId + "&numberOfBars=" + this.numberOfBarsToLoad);;
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
@@ -186,7 +187,7 @@ function (Score, Transport, rollStyle, Scroll) {
 			// see if we need to load more notes
             var notesFromTo = this._score.getNotesFromTo(this._currentScroll - this._width/4, this._currentScroll);
             if (notesFromTo && notesFromTo.length === 0 ) {
-                this.loadMoreNotes(this.sessionId, 1);
+                this.loadMoreNotes();
             }
 		}
 		//draw all of the notes
