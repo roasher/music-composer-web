@@ -19,7 +19,7 @@ define(["Tone/core/Transport", "data/Colors"], function (Transport, Colors){
 	/**
 	 *  Notes manage both the visual element and trigger the synth
 	 */
-	var Note = function(noteDescription, displayOptions){
+	var Note = function(noteDescription){
 
 		/**
 		 *  Note stats
@@ -57,18 +57,6 @@ define(["Tone/core/Transport", "data/Colors"], function (Transport, Colors){
 		 */
 		this._triggered = false;
 
-		/**
-		 *  place it on the screen
-		 */
-		var top =  (displayOptions.max - displayOptions.min) * (1 - (this.midiNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
-		top *=  displayOptions.noteHeight - 2;
-
-		//dimensions
-		this.top = top;
-		this.left = this.noteOn * displayOptions.pixelsPerSecond;
-		this.width = (this.duration * displayOptions.pixelsPerSecond) - 2;
-		this.width = Math.max(this.width, 3);
-		this.height = displayOptions.noteHeight - 2;
 	};
 
 	/**
@@ -99,14 +87,28 @@ define(["Tone/core/Transport", "data/Colors"], function (Transport, Colors){
 	/**
 	 *  Display the element
 	 */
-	Note.prototype.draw = function(context){
+	Note.prototype.draw = function(context, displayOptions){
 		context.beginPath();
 		if (this._triggered){
 			context.fillStyle = "black";
 		} else {
 			context.fillStyle = this.color;
 		}
-		context.fillRect(this.left * 2, this.top * 2, this.width * 2, this.height * 2);
+        /**
+         *  place it on the screen
+         */
+        var top =  (displayOptions.max - displayOptions.min) * (1 - (this.midiNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
+        top *=  displayOptions.noteHeight - 2;
+
+        //dimensions
+        var left = this.noteOn * displayOptions.pixelsPerSecond;
+
+        var width = (this.duration * displayOptions.pixelsPerSecond) - 2;
+        width = Math.max(width, 3);
+
+        var height = displayOptions.noteHeight - 2;
+
+		context.fillRect(left, top, width, height);
 	};
 
 	/**

@@ -81,6 +81,8 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             this.resize();
 
             this._currentNotes = null;
+
+            this.displayOptions = null;
         };
 
         /**
@@ -88,37 +90,40 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
          */
         Score.prototype.pixelsPerSecond = 100;
 
-        Score.prototype.getDisplayOptions = function (notes) {
+        Score.prototype.setDisplayOptions = function (pitches) {
             //get the min/max data
-            var minNote = Infinity;
-            var maxNote = -Infinity;
-            this.rangeLines.forEach(function (rangeLine) {
-                if (rangeLine.lastSavedRange.upperNote > maxNote) {
-                    maxNote = note.midiNote;
+            var minPitch = this.displayOptions ? this.displayOptions.min : Infinity;
+            var maxPitch = this.displayOptions ? this.displayOptions.max : -Infinity;
+            pitches.forEach(function (pitch) {
+                if (pitch > maxPitch) {
+                    maxPitch = pitch;
                 }
-                if (rangeLine.lastSavedRange.lowerNote < minNote) {
-                    minNote = note.midiNote;
+                if (pitch < minPitch) {
+                    minPitch = pitch;
                 }
             });
             //some padding
-            minNote -= 3;
-            maxNote += 3;
-            var noteHeight = this.element.offsetHeight / (maxNote - minNote);
+            // minPitch -= 3;
+            // maxPitch += 3;
+            var noteHeight = this.element.offsetHeight / (maxPitch - minPitch);
             var displayOptions = {
-                "min": minNote,
-                "max": maxNote,
+                "min": minPitch,
+                "max": maxPitch,
                 "pixelsPerSecond": this.pixelsPerSecond,
                 "noteHeight": Math.round(noteHeight)
             };
-            return displayOptions;
+            this.displayOptions = displayOptions;
         };
 
         Score.prototype.setRangeLines = function (rangeLines) {
-            var displayOptions = this.getDisplayOptions(this._currentNotes);
+            var pitches = [];
             this.rangeLines = [];
             for (var lineNumber = 0; lineNumber < rangeLines.length; lineNumber++) {
-                this.rangeLines.push(new RangeLine(rangeLines[lineNumber], displayOptions))
+                this.rangeLines.push(new RangeLine(rangeLines[lineNumber]));
+                pitches.push(rangeLines[lineNumber].lastSavedRange.lowerNote);
+                pitches.push(rangeLines[lineNumber].lastSavedRange.upperNote);
             }
+            this.setDisplayOptions(pitches);
         };
 
         /**
@@ -127,16 +132,18 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
         Score.prototype.setNotes = function (notes) {
             this._currentNotes = notes;
             this.clearNotes();
-            var displayOptions = this.getDisplayOptions(notes);
             this.intervalTree = new createIntervalTree();
             var duration = -Infinity;
+            var pitches = [];
             for (var i = 0; i < notes.length; i++) {
-                var note = new Note(notes[i], displayOptions);
+                var note = new Note(notes[i]);
                 if (note.noteOff > duration) {
                     duration = note.noteOff;
                 }
                 this.intervalTree.insert([note.noteOn, note.noteOff, note]);
+                pitches.push(notes[i].midiNote)
             }
+            this.setDisplayOptions(pitches);
             //set the width
             this.width = duration * this.pixelsPerSecond + window.innerWidth * 2;
             this.element.style.width = this.width;
@@ -144,17 +151,17 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
 
         Score.prototype.addNotes = function (notes) {
             this._currentNotes = this._currentNotes.concat(notes);
-            //this.clearNotes();
-            var displayOptions = this.getDisplayOptions(notes);
-            //this.intervalTree = new createIntervalTree();
             var duration = -Infinity;
+            var pitches = [];
             for (var i = 0; i < notes.length; i++) {
-                var note = new Note(notes[i], displayOptions);
+                var note = new Note(notes[i]);
                 if (note.noteOff > duration) {
                     duration = note.noteOff;
                 }
                 this.intervalTree.insert([note.noteOn, note.noteOff, note]);
+                pitches.push(notes[i].midiNote)
             }
+            this.setDisplayOptions(pitches);
             //set the width
             this.duration += duration;
             this.width = this.duration * this.pixelsPerSecond + window.innerWidth * 2;
@@ -262,12 +269,12 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             var notes = this.currentlyDisplayedNotes;
             for (var i = 0; i < notes.length; i++) {
                 var n = notes[i];
-                n.draw(this.context);
+                n.draw(this.context, this.displayOptions);
             }
             this.context.restore();
             for (var rangeLineNumber = 0; rangeLineNumber < this.rangeLines.length; rangeLineNumber++) {
                 var currentRangeLine = this.rangeLines[rangeLineNumber];
-                currentRangeLine.draw(this.context, rangeLineNumber * 40, this.canvasWidth);
+                currentRangeLine.draw(this.context, rangeLineNumber * 40, this.canvasWidth, this.displayOptions);
             }
         };
 

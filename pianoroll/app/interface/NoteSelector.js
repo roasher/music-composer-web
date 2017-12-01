@@ -45,7 +45,7 @@ define(["../fileplayer/Range"],
                 opt = options[i];
 
                 if (opt.selected) {
-                    result.push(opt.value || opt.text);
+                    result.push(parseInt(opt.value));
                 }
             }
             return result;
