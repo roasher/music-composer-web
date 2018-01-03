@@ -97,8 +97,9 @@ define(["Tone/core/Transport", "data/Colors"], function (Transport, Colors){
         /**
          *  place it on the screen
          */
-        var top =  (displayOptions.max - displayOptions.min) * (1 - (this.midiNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
+        var top =  displayOptions.max - this.midiNote;
         top *=  displayOptions.noteHeight - 2;
+        top = top * 2;
 
         //dimensions
         var left = this.noteOn * displayOptions.pixelsPerSecond;

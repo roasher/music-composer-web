@@ -1,7 +1,7 @@
 define(["data/Colors"],
     function (Colors) {
 
-        var RangeLine = function (rangeLine, displayOptions) {
+        var RangeLine = function (rangeLine) {
 
             this.id = rangeLine.voice.id;
             this.color = Colors[rangeLine.partNumber];
@@ -17,11 +17,11 @@ define(["data/Colors"],
             context.beginPath();
             context.fillStyle = "black";
 
-            var top1 =  (displayOptions.max - displayOptions.min) * (1 - (this.lowerNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
+            var top1 =  displayOptions.max - this.lowerNote;
             top1 *=  displayOptions.noteHeight - 2;
             top1 = top1 * 2;
 
-            var top2 =  (displayOptions.max - displayOptions.min) * (1 - (this.upperNote - displayOptions.min) / (displayOptions.max - displayOptions.min));
+            var top2 =  displayOptions.max - this.upperNote;
             top2 *=  displayOptions.noteHeight - 2;
             top2 = top2 * 2;
 
