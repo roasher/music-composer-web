@@ -105,12 +105,11 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             //some padding
             // minPitch -= 3;
             // maxPitch += 3;
-            var noteHeight = this.element.offsetHeight / (maxPitch - minPitch);
             var displayOptions = {
                 "min": minPitch,
                 "max": maxPitch,
                 "pixelsPerSecond": this.pixelsPerSecond,
-                "noteHeight": Math.round(noteHeight)
+                "pixelsInOnePitchUnit": Math.round(this.element.offsetHeight / (maxPitch - minPitch))
             };
             this.displayOptions = displayOptions;
         };
@@ -268,14 +267,34 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             this.context.translate(-offset * 2, 0);
             var notes = this.currentlyDisplayedNotes;
             for (var i = 0; i < notes.length; i++) {
-                var n = notes[i];
-                n.draw(this.context, this.displayOptions);
+                var note = notes[i];
+
+                var width = (note.duration * this.displayOptions.pixelsPerSecond) - 2;
+                width = Math.max(width, 3);
+
+                note.draw(this.context,
+                    this.calculateTop(note.midiNote),
+                    note.noteOn * this.displayOptions.pixelsPerSecond,
+                    width,
+                    this.displayOptions.pixelsInOnePitchUnit - 2
+                );
             }
             this.context.restore();
             for (var rangeLineNumber = 0; rangeLineNumber < this.rangeLines.length; rangeLineNumber++) {
                 var currentRangeLine = this.rangeLines[rangeLineNumber];
-                currentRangeLine.draw(this.context, rangeLineNumber * 40, this.canvasWidth, this.displayOptions);
+                currentRangeLine.draw(this.context,
+                    this.calculateTop(currentRangeLine.lowerNote),
+                    this.calculateTop(currentRangeLine.upperNote),
+                    this.canvasWidth,
+                    rangeLineNumber * 40);
             }
+        };
+
+        Score.prototype.calculateTop = function (pitch) {
+            var top =  this.displayOptions.max - pitch;
+            top *=  this.displayOptions.pixelsInOnePitchUnit - 2;
+            top = top * 2;
+            return top;
         };
 
         Score.prototype.getBachChoralVoiceRangeDTO = function () {

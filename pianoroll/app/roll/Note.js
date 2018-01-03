@@ -87,28 +87,13 @@ define(["Tone/core/Transport", "data/Colors"], function (Transport, Colors){
 	/**
 	 *  Display the element
 	 */
-	Note.prototype.draw = function(context, displayOptions){
+	Note.prototype.draw = function(context, top, left, width, height){
 		context.beginPath();
 		if (this._triggered){
 			context.fillStyle = "black";
 		} else {
 			context.fillStyle = this.color;
 		}
-        /**
-         *  place it on the screen
-         */
-        var top =  displayOptions.max - this.midiNote;
-        top *=  displayOptions.noteHeight - 2;
-        top = top * 2;
-
-        //dimensions
-        var left = this.noteOn * displayOptions.pixelsPerSecond;
-
-        var width = (this.duration * displayOptions.pixelsPerSecond) - 2;
-        width = Math.max(width, 3);
-
-        var height = displayOptions.noteHeight - 2;
-
 		context.fillRect(left, top, width, height);
 	};
 

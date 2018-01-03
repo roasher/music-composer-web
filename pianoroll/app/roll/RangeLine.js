@@ -13,31 +13,23 @@ define(["data/Colors"],
 
         };
 
-        RangeLine.prototype.draw = function (context, coordinateOfLegend, right, displayOptions) {
+        RangeLine.prototype.draw = function (context, firstLineTop, secondLineTop, right, legendLeft) {
             context.beginPath();
             context.fillStyle = "black";
 
-            var top1 =  displayOptions.max - this.lowerNote;
-            top1 *=  displayOptions.noteHeight - 2;
-            top1 = top1 * 2;
+            context.moveTo(0, firstLineTop);
+            context.lineTo(right, firstLineTop);
 
-            var top2 =  displayOptions.max - this.upperNote;
-            top2 *=  displayOptions.noteHeight - 2;
-            top2 = top2 * 2;
-
-            context.moveTo(0, top1);
-            context.lineTo(right, top1);
-
-            context.moveTo(0, top2);
-            context.lineTo(right, top2);
+            context.moveTo(0, secondLineTop);
+            context.lineTo(right, secondLineTop);
 
             context.strokeStyle = this.color;
             context.font = "20px Arial";
             context.stroke();
 
             context.fillStyle = Colors[this.id];
-            context.fillText(this.id, coordinateOfLegend, top1);
-            context.fillText(this.id, coordinateOfLegend, top2);
+            context.fillText(this.id, legendLeft, firstLineTop);
+            context.fillText(this.id, legendLeft, secondLineTop);
         };
 
         return RangeLine;
