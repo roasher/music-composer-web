@@ -170,27 +170,51 @@ $ButtonMargin: 20px;
 		height: 0px;
 		z-index: 100;
 
-		#firstVoiceRange {
+		#firstVoiceRange_upper {
 			position: absolute;
 			bottom: $ButtonMargin;
 			left: 10%;
 		}
 
-		#secondVoiceRange {
+		#firstVoiceRange_lower {
+			position: absolute;
+			bottom: 10%;
+			left: 10%;
+		}
+
+		#secondVoiceRange_upper {
 			position: absolute;
 			bottom: $ButtonMargin;
 			left: 60%;
 		}
 
-		#altoVoiceRange {
+		#secondVoiceRange_lower {
+			position: absolute;
+			bottom: 10%;
+			left: 60%;
+		}
+
+		#altoVoiceRange_upper {
 			position: absolute;
 			bottom: $ButtonMargin;
 			left: 110%;
 		}
 
-		#bassVoiceRange {
+		#altoVoiceRange_lower {
+			position: absolute;
+			bottom: 10%;
+			left: 110%;
+		}
+
+		#bassVoiceRange_upper {
 			position: absolute;
 			bottom: $ButtonMargin;
+			left: 160%;
+		}
+
+		#bassVoiceRange_lower {
+			position: absolute;
+			bottom: 10%;
 			left: 160%;
 		}
 

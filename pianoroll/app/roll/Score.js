@@ -119,8 +119,8 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             this.rangeLines = [];
             for (var lineNumber = 0; lineNumber < rangeLines.length; lineNumber++) {
                 this.rangeLines.push(new RangeLine(rangeLines[lineNumber]));
-                pitches.push(rangeLines[lineNumber].lastSavedRange.lowerNote);
-                pitches.push(rangeLines[lineNumber].lastSavedRange.upperNote);
+                pitches.push(rangeLines[lineNumber].getLastSavedLowerNote());
+                pitches.push(rangeLines[lineNumber].getLastSavedUpperNote());
             }
             this.setDisplayOptions(pitches);
         };

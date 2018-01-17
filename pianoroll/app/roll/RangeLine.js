@@ -7,9 +7,9 @@ define(["data/Colors"],
             this.color = Colors[rangeLine.partNumber];
 
             // first note
-            this.lowerNote = rangeLine.lastSavedRange.lowerNote;
+            this.lowerNote = rangeLine.getLastSavedLowerNote();
             // second note
-            this.upperNote = rangeLine.lastSavedRange.upperNote;
+            this.upperNote = rangeLine.getLastSavedUpperNote();
 
         };
 
