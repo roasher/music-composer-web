@@ -1,4 +1,4 @@
-define(["./NoteSelector", "../fileplayer/Range"],
+define(["./RangeSelector", "../fileplayer/Range"],
     function (NoteSelector, Range) {
         var composerAdjustPanel = function (container) {
             this._composerAdjustPanel = document.createElement("div");
