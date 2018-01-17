@@ -274,9 +274,9 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
 
                 note.draw(this.context,
                     this.calculateTop(note.midiNote),
-                    note.noteOn * this.displayOptions.pixelsPerSecond,
-                    width,
-                    this.displayOptions.pixelsInOnePitchUnit - 2
+                    note.noteOn * this.displayOptions.pixelsPerSecond * 2,
+                    width * 2,
+                    (this.displayOptions.pixelsInOnePitchUnit - 2) * 2
                 );
             }
             this.context.restore();
