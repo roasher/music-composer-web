@@ -26,42 +26,12 @@ define(["style/interface.scss", "data/Scores", "data/ScoreInfo", "Tone/core/Tran
 		container.appendChild(this._playButton);
 		this._playButton.addEventListener("click", this._play.bind(this));
 
-		//the prev button
-		this._prevButton = document.createElement("div");
-		this._prevButton.id = "Previous";
-		this._prevButton.classList.add("Button");
-		this._prevButton.classList.add("ScoreButton");
-		this._prevButton.classList.add("icon-svg_left_arrow");
-		container.appendChild(this._prevButton);
-		this._prevButton.addEventListener("click", this._selectScore.bind(this, -1));
-
-		//the next button
-		this._nextButton = document.createElement("div");
-		this._nextButton.id = "Next";
-		this._nextButton.classList.add("Button");
-		this._nextButton.classList.add("ScoreButton");
-		this._nextButton.classList.add("icon-svg_right_arrow");
-		container.appendChild(this._nextButton);
-		this._nextButton.addEventListener("click", this._selectScore.bind(this, 1));
-
-		this._scoreIndex = 0;
-		this._setScoreControls();
-
 		//the callbacks
 		this.onPlay = function(){};
 		this.onScore = function(){};
 
 		this._setPlayIcon();
 
-		//load the first score
-		// this._loadScore();
-	};
-
-	PlayButton.prototype._selectScore = function(move){
-		this._setPlayIcon();
-		this._scoreIndex += move;
-		this._setScoreControls();
-		this._loadScore(Scores[this._scoreIndex]);
 	};
 
 	PlayButton.prototype.stop = function(move){
@@ -116,19 +86,19 @@ define(["style/interface.scss", "data/Scores", "data/ScoreInfo", "Tone/core/Tran
 		xhr.send(null);
 	};
 
-	PlayButton.prototype._setScoreControls = function(){
-		if (this._scoreIndex === 0){
-			this._prevButton.classList.add("Disabled");
-		} else {
-			this._prevButton.classList.remove("Disabled");
-		}
-
-		if (this._scoreIndex === Scores.length - 1){
-			this._nextButton.classList.add("Disabled");
-		} else {
-			this._nextButton.classList.remove("Disabled");
-		}
-	};
+	// PlayButton.prototype._setScoreControls = function(){
+	// 	if (this._scoreIndex === 0){
+	// 		this._prevButton.classList.add("Disabled");
+	// 	} else {
+	// 		this._prevButton.classList.remove("Disabled");
+	// 	}
+    //
+	// 	if (this._scoreIndex === Scores.length - 1){
+	// 		this._nextButton.classList.add("Disabled");
+	// 	} else {
+	// 		this._nextButton.classList.remove("Disabled");
+	// 	}
+	// };
 
 	return PlayButton;
 });

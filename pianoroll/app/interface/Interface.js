@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-define(["style/interface.scss", "./SoundSelection", "./PlayButton", "mic/Microphone", "./AddNotes", "./ComposerAdjustPanel"],
-function (interfaceStyle, SoundSelection, PlayButton, Microphone, AddNotes, ComposerAdjustPanel) {
+define(["style/interface.scss", "./Panel"],
+function (interfaceStyle, Panel) {
 
 	var Interface = function(container){
 
@@ -23,76 +23,33 @@ function (interfaceStyle, SoundSelection, PlayButton, Microphone, AddNotes, Comp
 		this._interface.id = "SongControls";
 		container.appendChild(this._interface);
 
-		this._soundButtons = new SoundSelection(this._interface);
+		this._panel = new Panel(this._interface);
 
-		this._playButton = new PlayButton(this._interface);
-		this._addNotes = new AddNotes(this._interface);
-		this._composerAdjustPanel = new ComposerAdjustPanel(this._interface);
-
-		this._microphone = new Microphone(this._interface, this._soundButtons.microphone);
-
-		this._microphone.onstart = this._startRec.bind(this);
-		this._microphone.onstop = this._stopRec.bind(this);
-		this._microphone.oncancel = this._recCanceled.bind(this);
-
-		this._onRec = function(){};
 	};
 
 	Interface.prototype.doOnConfirmAdjustment = function (cb) {
-		this._composerAdjustPanel.doOnConfirmAdjustment = cb;
+		this._panel._composerAdjustPanel.doOnConfirmAdjustment = cb;
     };
 
 	Interface.prototype.confirmAdjustment = function () {
-		this._composerAdjustPanel._confirmAdjustment();
+		this._panel._composerAdjustPanel._confirmAdjustment();
     };
 
 	Interface.prototype.onAddNote = function(cb) {
-		this._addNotes.onAddNote = cb;
+		this._panel._addNotes.onAddNote = cb;
 	};
 
 	Interface.prototype.onPlay = function(cb){
-		this._playButton.onPlay = cb;
-	};
-
-	Interface.prototype.onInstrument = function(cb){
-		this._soundButtons.onSelect = cb;
+		this._panel._playButton.onPlay = cb;
 	};
 
 	Interface.prototype.onScore = function(cb){
-		this._playButton.onScore = cb;
-	};
-
-	Interface.prototype.onAddNotes = function(cb) {
-		this._addNotes.onAddNotes = cb;
-	};
-
-	Interface.prototype.onRecord = function(cb){
-		this._onRec = cb;
-	};
-
-	Interface.prototype.onBuffer = function(cb){
-		this._microphone.onbuffer = cb;
-	};
-
-	Interface.prototype._startRec = function(){
-		this._soundButtons.recording(true);
-		this._onRec(true);
-	};
-
-	Interface.prototype._stopRec = function(){
-		this._soundButtons.recording(false);
-		this._onRec(false);
-	};
-
-	Interface.prototype._recCanceled = function(){
-		this._soundButtons.recording(false);
-		this._soundButtons.previous();
-		this._onRec(false);
+		this._panel._playButton.onScore = cb;
 	};
 
 	//force it to a stop
 	Interface.prototype.stop = function(){
-		this._playButton.stop();
+		this._panel._playButton.stop();
 	};
 
 	return Interface;

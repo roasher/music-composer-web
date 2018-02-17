@@ -2,6 +2,7 @@
 
 $ButtonSize : 80px;
 $ButtonMargin: 20px;
+$SmallButton : $ButtonSize/2;
 
 .Button{
 	width: $ButtonSize;
@@ -50,6 +51,14 @@ $ButtonMargin: 20px;
 	box-shadow: inset 0 10px 10px -10px rgba(0,0,0,0.4);
 	z-index: 111;
 
+	.PlayPause {
+		font-size: $ButtonSize;
+		position: absolute;
+		bottom: $ButtonMargin;
+		left: 50%;
+		margin-left: -$ButtonSize/2;
+	}
+
 	.Button {
 		position: fixed;
 		bottom: $SynthControlsHeight / 2;
@@ -58,6 +67,7 @@ $ButtonMargin: 20px;
 		background-repeat: no-repeat;
 		text-align: center;
 		cursor: pointer;
+		left: 50%;
 	}
 
 	.Button.Active {
@@ -65,156 +75,58 @@ $ButtonMargin: 20px;
 		color: white;
 	}
 
-	$ButtonOffset : 120px;
-
-	$backgroundSize : 90%;
-
-	#Piano {
-		left: calc(50% - #{$ButtonOffset});
-	}
-
-	#Synth {
-		left: 50%;
-	}
-
-	$NarrowButtonOffset : 100px;
-
-	@media screen and (max-width: 360px) {
-
-		#Piano {
-			left: calc(50% - #{$NarrowButtonOffset})!important;
-		}
-
-		#Sampler {
-			left: calc(50% + #{$NarrowButtonOffset})!important;
-		}
-	}
-
-	#Sampler {
-		left: calc(50% + #{$ButtonOffset});
-		z-index: 1000;
-
-		#MeterRing {
-			position: absolute;
-			margin-left: -$ButtonSize / 2;
-			margin-top: -$ButtonSize / 2;
-			left: 50%;
-			top: 50%;
-			border: 1px solid $lightGrey;
-			width: 100%;
-			height: 100%;
-			border-radius: 50%;
-		    box-sizing: border-box;
-		    opacity: 0;
-		}
-	}
-
-	#Sampler.Unsupported {
-		opacity: 0.5;
-		background-color: $lightGrey;
-	}
-
-}
-
-#SynthControls.Recording {
-
-	background-color: transparent;
-	box-shadow: none;
-
-	.Button {
-		display: none;
-	}
-
-	#Sampler.Active {
-
-		display: initial;
-		background-color: $red;
-
-		#MeterRing {
-			opacity: 1;
-		}
-	}
-}
-
-#SongControls{
-	position: fixed;
-	bottom: $SynthControlsHeight;
-	left: 0px;
-	width: 100%;
-	height: 0px;
-	z-index: 100;
-
-	#PlayPause {
-		font-size: $ButtonSize;
-		position: absolute;
-		bottom: $ButtonMargin;
-		left: 50%;
-		margin-left: -$ButtonSize/2;
-	}
-
-	#addNotes {
-		font-size: $ButtonSize;
-		position: absolute;
-		bottom: $ButtonMargin;
-		left: 70%;
-		margin-left: -$ButtonSize/2;
-	}
-
-	$SmallButton : $ButtonSize/2;
-
 	#composerAdjustPanel {
-		position: fixed;
-		bottom: $SynthControlsHeight;
+		position: absolute;
+		bottom: $SynthControlsHeight / 2;
 		left: 0px;
 		width: 10%;
-		height: 0px;
 		z-index: 100;
 
 		#firstVoiceRange_upper {
 			position: absolute;
-			bottom: $ButtonMargin;
+			bottom: 3px;
 			left: 10%;
 		}
 
 		#firstVoiceRange_lower {
 			position: absolute;
-			bottom: 10%;
+			top: 3px;
 			left: 10%;
 		}
 
 		#secondVoiceRange_upper {
 			position: absolute;
-			bottom: $ButtonMargin;
+			bottom: 3px;
 			left: 60%;
 		}
 
 		#secondVoiceRange_lower {
 			position: absolute;
-			bottom: 10%;
+			top: 3px;
 			left: 60%;
 		}
 
 		#altoVoiceRange_upper {
 			position: absolute;
-			bottom: $ButtonMargin;
+			bottom: 3px;
 			left: 110%;
 		}
 
 		#altoVoiceRange_lower {
 			position: absolute;
-			bottom: 10%;
+			top: 3px;
 			left: 110%;
 		}
 
 		#bassVoiceRange_upper {
 			position: absolute;
-			bottom: $ButtonMargin;
+			bottom: 3px;
 			left: 160%;
 		}
 
 		#bassVoiceRange_lower {
 			position: absolute;
-			bottom: 10%;
+			top: 3px;
 			left: 160%;
 		}
 
@@ -231,40 +143,10 @@ $ButtonMargin: 20px;
 
 	}
 
-	.ScoreButton {
-		position: absolute;
-		height: $SmallButton;
-		width: $SmallButton;
-		line-height: $SmallButton;
-		bottom: $ButtonMargin;
-		margin-left: -$SmallButton/2;
-		transition: opacity 0.2s, transform 0.05s;
-	}
+	$ButtonOffset : 120px;
 
-	.ScoreButton:before {
-		font-size: $SmallButton;
-		line-height: $SmallButton;
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0px;
-		left: 0px;
-	}
+	$backgroundSize : 90%;
 
-	.ScoreButton.Disabled {
-		opacity: 0;
-		pointer-events: none;
-	}
-
-
-	$DirectionButtonOffset : 80px;
-
-	#Previous {
-		left: calc(50% - #{$DirectionButtonOffset});
-	}
-	#Next {
-		left: calc(50% + #{$DirectionButtonOffset});
-	}
 }
 
 #Scrubber{

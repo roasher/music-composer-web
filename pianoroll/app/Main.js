@@ -32,9 +32,6 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		/**
 		 * EVENTS
 		 */
-		interface.onInstrument(function(inst){
-			player.setInstrument(inst);
-		});
 		interface.onPlay(function(playing){
 			if (playing){
 				roll.start();
@@ -43,32 +40,11 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 				player.releaseAll();
 			}
 		});
-		interface.onScore(function(json){
-			roll.setScore(json);
-		});
-		interface.onAddNotes(function(json) {
-			roll.addNotes(json);
-		});
 		interface.doOnConfirmAdjustment(function (rangeLines) {
 			roll.setRangeLines(rangeLines);
         });
 
 		var wasPlaying = false;
-		interface.onRecord(function(recording){
-			if (recording){
-				wasPlaying = Transport.state === "started";
-				roll.stop();
-			} else {
-				if (wasPlaying){
-					wasPlaying = false;
-					roll.start();
-				}
-			}
-		});
-		interface.onBuffer(function(buffer, duration, onset){
-			player.setBuffer(buffer, duration, onset);
-		});
-
 
 		roll.onnote = function(note, duration, time, velocity){
 			player.triggerAttackRelease(note, duration, time, velocity);
