@@ -129,6 +129,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
          *  Set the array of notes
          */
         Score.prototype.setNotes = function (notes) {
+            console.log(new Date().toJSON() + "Set Notes Triggered");
             this._currentNotes = notes;
             this.clearNotes();
             this.intervalTree = new createIntervalTree();
@@ -140,7 +141,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
                     duration = note.noteOff;
                 }
                 this.intervalTree.insert([note.noteOn, note.noteOff, note]);
-                pitches.push(notes[i].midiNote)
+                pitches.push(notes[i].midiNote);
             }
             this.setDisplayOptions(pitches);
             //set the width
@@ -149,6 +150,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
         };
 
         Score.prototype.addNotes = function (notes) {
+            console.log(new Date().toJSON() + " Add Notes Triggered");
             this._currentNotes = this._currentNotes.concat(notes);
             var duration = -Infinity;
             var pitches = [];
@@ -158,7 +160,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
                     duration = note.noteOff;
                 }
                 this.intervalTree.insert([note.noteOn, note.noteOff, note]);
-                pitches.push(notes[i].midiNote)
+                pitches.push(notes[i].midiNote);
             }
             this.setDisplayOptions(pitches);
             //set the width

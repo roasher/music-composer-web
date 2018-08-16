@@ -92,6 +92,8 @@ function (Score, Transport, rollStyle, Scroll) {
 
 		//set the lookahead to match the other one
 		// Transport._clock.lookAhead = lookAhead;
+
+		this.loadNotesRequestSend = false;
 	};
 
     Roll.prototype.setRangeLines = function (rangeLines) {
@@ -131,6 +133,7 @@ function (Score, Transport, rollStyle, Scroll) {
 
 	Roll.prototype.playOnScreenNotes = function () {
         var triggerLineNotes = this._score.getTriggerLine(this._currentScroll - this._width / 2 - 1);
+        // console.log("TriggerLineNotes length is " + triggerLineNotes.length);
         if (triggerLineNotes){
             //compare it to the last one and get the note attacks and releases
             for (var i = 0; i < triggerLineNotes.length; i++){
@@ -142,6 +145,8 @@ function (Score, Transport, rollStyle, Scroll) {
                     } else {
                         var startTime = this._computedStartTime + note.noteOn + lookAhead;
                         this.onnote(note.note, note.duration, startTime, note.velocity);
+                        // var datetime = new Date().toJSON();
+                        // console.log(datetime + " " + note.note);
                         note.triggerAttackRelease(note.duration, startTime, note.velocity);
                     }
                 }
@@ -151,12 +156,15 @@ function (Score, Transport, rollStyle, Scroll) {
     };
 
 	Roll.prototype.loadMoreNotes = function () {
+		if (this.loadNotesRequestSend) return;
+
         let bachChoralVoiceRangeDTO = this._score.getBachChoralVoiceRangeDTO();
         console.log("Having Ranges", bachChoralVoiceRangeDTO);
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:8888/getBars?compositionId=" + this.sessionId + "&numberOfBars=" + this.numberOfBarsToLoad);;
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
+            this.loadNotesRequestSend = false;
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     var json = JSON.parse(xhr.responseText);
@@ -167,6 +175,7 @@ function (Score, Transport, rollStyle, Scroll) {
             }
         }.bind(this);
         xhr.send(JSON.stringify(bachChoralVoiceRangeDTO));
+        this.loadNotesRequestSend = true;
     };
 
 	Roll.prototype._loop = function(){

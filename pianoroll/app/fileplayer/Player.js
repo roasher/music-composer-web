@@ -151,6 +151,8 @@ define(["Tone/source/MultiPlayer", "./Notes", "Tone/core/Master", "Tone/core/Buf
 	 * @param  {Number} time     When the note should trigger
 	 */
 	Player.prototype.triggerAttackRelease = function(note, duration, time){
+        // var datetime = new Date().toJSON();
+		// console.log(datetime + " note=" + note + " ,duration=" + duration + " ,time=" + time);
 		var description = this._notes[note];
 		this._multiPlayer.start(description.buffer, time, {
 			playbackRate : this._multiPlayer.intervalToFrequencyRatio(description.interval),
