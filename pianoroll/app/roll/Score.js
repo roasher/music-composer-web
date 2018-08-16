@@ -47,7 +47,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             /**
              *  the interval tree
              */
-            this.intervalTree = null;
+            this.intervalTree = new createIntervalTree();
 
             /**
              * the width of the scroll container
@@ -80,7 +80,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             window.addEventListener("resize", this.resize.bind(this));
             this.resize();
 
-            this._currentNotes = null;
+            this._currentNotes = [];
 
             this.displayOptions = null;
         };
