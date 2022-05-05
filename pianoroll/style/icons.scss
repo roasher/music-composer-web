@@ -92,6 +92,12 @@
 	@if $filename == svg_play {
 		$char: "\E016";
 	}
+	@if $filename == voice_up {
+		$char: "UP";
+	}
+	@if $filename == voice_down {
+		$char: "D";
+	}
 	@if $filename == svg_record {
 		$char: "\E017";
 	}
@@ -193,6 +199,12 @@
 }
 .icon-svg_play {
 	@include icon(svg_play);
+}
+.icon-voice_up {
+	@include icon(voice_up);
+}
+.icon-voice_down {
+	@include icon(voice_down);
 }
 .icon-svg_record {
 	@include icon(svg_record);

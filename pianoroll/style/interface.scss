@@ -130,7 +130,7 @@ $SmallButton : $ButtonSize/2;
 			left: 160%;
 		}
 
-		#confirmAdjustmentsButton {
+		#moveAllVoicesUp {
 			position: absolute;
 			height: $SmallButton;
 			width: $SmallButton;
@@ -139,6 +139,19 @@ $SmallButton : $ButtonSize/2;
 			margin-left: -$SmallButton/2;
 			transition: opacity 0.2s, transform 0.05s;
 			left: 220%;
+			font-size: 20px;
+		}
+
+		#moveAllVoicesDown {
+			position: absolute;
+			height: $SmallButton;
+			width: $SmallButton;
+			line-height: $SmallButton;
+			bottom: $ButtonMargin;
+			margin-left: -$SmallButton/2;
+			transition: opacity 0.2s, transform 0.05s;
+			left: 280%;
+			font-size: 20px;
 		}
 
 	}

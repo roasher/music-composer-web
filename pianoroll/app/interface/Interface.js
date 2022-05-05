@@ -33,7 +33,15 @@ function (interfaceStyle, Panel) {
 
 	Interface.prototype.confirmAdjustment = function () {
 		this._panel._composerAdjustPanel._confirmAdjustment();
+	};
+
+	Interface.prototype.allVoicesUp = function () {
+		this._panel._composerAdjustPanel.allVoicesUp();
     };
+
+	Interface.prototype.allVoicesDown = function () {
+		this._panel._composerAdjustPanel.allVoicesDown();
+	};
 
 	Interface.prototype.onAddNote = function(cb) {
 		this._panel._addNotes.onAddNote = cb;

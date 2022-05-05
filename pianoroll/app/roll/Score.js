@@ -105,7 +105,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             //some padding
             // minPitch -= 3;
             // maxPitch += 3;
-            var displayOptions = {
+            let displayOptions = {
                 "min": minPitch,
                 "max": maxPitch,
                 "pixelsPerSecond": this.pixelsPerSecond,
@@ -115,9 +115,9 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
         };
 
         Score.prototype.setRangeLines = function (rangeLines) {
-            var pitches = [];
+            let pitches = [];
             this.rangeLines = [];
-            for (var lineNumber = 0; lineNumber < rangeLines.length; lineNumber++) {
+            for (let lineNumber = 0; lineNumber < rangeLines.length; lineNumber++) {
                 this.rangeLines.push(new RangeLine(rangeLines[lineNumber]));
                 pitches.push(rangeLines[lineNumber].getLastSavedLowerNote());
                 pitches.push(rangeLines[lineNumber].getLastSavedUpperNote());
@@ -305,7 +305,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             }
             var findRange = function (id, rangeLines) {
                 return rangeLines.find(function (e) {
-                    return e.id === id
+                    return e.id === id;
                 });
             };
             var range1 = {

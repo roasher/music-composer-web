@@ -20,7 +20,7 @@ define(["../fileplayer/Range", "./NoteSelector"],
             this.lowerVoiceSelector.saveSelectedValues();
         };
 
-        // Return an array of the selected opion values
+        // Return an array of the selected option values
         // select is an HTML select element
         rangeSelector.prototype.getSelectValues = function() {
             var result = [];
@@ -40,6 +40,16 @@ define(["../fileplayer/Range", "./NoteSelector"],
 
         rangeSelector.prototype.getLastSavedUpperNote = function () {
             return this.upperVoiceSelector.getLastSavedPitch();
+        };
+
+        rangeSelector.prototype.rangeUp = function () {
+            this.upperVoiceSelector.voiceUp();
+            this.lowerVoiceSelector.voiceUp();
+        };
+
+        rangeSelector.prototype.rangeDown = function () {
+            this.upperVoiceSelector.voiceDown();
+            this.lowerVoiceSelector.voiceDown();
         };
 
         return rangeSelector;
