@@ -23,11 +23,11 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 	domReady(function(){
 
 		//the interface
-		var player = new Player();
+		let player = new Player();
 
-		var roll = new Roll(document.body);
+		let roll = new Roll(document.body);
 
-		var interface = new Interface(document.body);
+		let interface = new Interface(document.body);
 
 		/**
 		 * EVENTS
@@ -44,7 +44,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 			roll.setRangeLines(rangeLines);
         });
 
-		var wasPlaying = false;
+		let wasPlaying = false;
 
 		roll.onnote = function(note, duration, time, velocity){
 			player.triggerAttackRelease(note, duration, time, velocity);
@@ -53,7 +53,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 			player.releaseAll();
 		};
 
-		var orientation = new Orientation(function(){
+		let orientation = new Orientation(function(){
 			//called when stopped
 			Transport.stop();
 			roll.stop();
@@ -62,12 +62,12 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		window.parent.postMessage("loaded", "*");
 
 		//send the ready message to the parent
-		var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+		let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
 		//full screen button on iOS
 		if (isIOS){
 			//make a full screen element and put it in front
-			var iOSTapper = document.createElement("div");
+			let iOSTapper = document.createElement("div");
 			iOSTapper.id = "iOSTap";
 			iOSTapper.addEventListener("touchstart", function(e){
 				e.preventDefault();

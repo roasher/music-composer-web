@@ -89,10 +89,10 @@ define(["style/interface.scss", "data/Scores", "data/ScoreInfo", "Tone/core/Tran
         };
 
         addNotes.prototype._loadScore = function () {
-            var compositionId = this.sessionId;
-            var numberOfBars = 1;
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://localhost:8888/getBars?compositionId=" + compositionId + "&numberOfBars=1");
+            let compositionId = this.sessionId;
+            let numberOfBars = 2;
+            let xhr = new XMLHttpRequest();
+            xhr.open("GET", `http://localhost:8888/getBars?compositionId=${compositionId}&numberOfBars=${numberOfBars}`);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {

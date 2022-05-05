@@ -81,7 +81,7 @@ function (Score, Transport, rollStyle, Scroll) {
 
 		// session
         this.sessionId = Math.floor(Math.random() * 10000000000000001);
-        this.numberOfBarsToLoad = 1;
+        this.numberOfBarsToLoad = 2;
 
 		//start the loop
 		// this._loop();
@@ -161,8 +161,8 @@ function (Score, Transport, rollStyle, Scroll) {
         let bachChoralVoiceRangeDTO = this._score.getBachChoralVoiceRangeDTO();
         console.log("Having Ranges", bachChoralVoiceRangeDTO);
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8888/getBars?compositionId=" + this.sessionId + "&numberOfBars=" + this.numberOfBarsToLoad);;
-        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.open("POST", `http://localhost:8888/getBars?compositionId=${this.sessionId}"&numberOfBars=${this.numberOfBarsToLoad}`);
+        xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             this.loadNotesRequestSend = false;
             if (xhr.readyState === 4) {
@@ -170,7 +170,7 @@ function (Score, Transport, rollStyle, Scroll) {
                     var json = JSON.parse(xhr.responseText);
                     this.addNotes(json);
                 } else {
-                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+                    console.log("Error: " + xhr.status); // An error occurred during the request.
                 }
             }
         }.bind(this);
@@ -194,7 +194,7 @@ function (Score, Transport, rollStyle, Scroll) {
 			this.playOnScreenNotes();
 
 			// see if we need to load more notes
-            var notesFromTo = this._score.getNotesFromTo(this._currentScroll - this._width/4, this._currentScroll);
+            var notesFromTo = this._score.getNotesFromTo(this._currentScroll - this._width/24, this._currentScroll);
             if (notesFromTo && notesFromTo.length === 0 ) {
                 this.loadMoreNotes();
             }

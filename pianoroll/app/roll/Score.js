@@ -83,6 +83,8 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             this._currentNotes = [];
 
             this.displayOptions = null;
+            // displayOptions would be set only first time on init
+            this.displayOptionsSet = false;
         };
 
         /**
@@ -91,9 +93,12 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
         Score.prototype.pixelsPerSecond = 100;
 
         Score.prototype.setDisplayOptions = function (pitches) {
+            if (this.displayOptionsSet) return;
             //get the min/max data
-            var minPitch = this.displayOptions ? this.displayOptions.min : Infinity;
-            var maxPitch = this.displayOptions ? this.displayOptions.max : -Infinity;
+            // let minPitch = this.displayOptions ? this.displayOptions.min : Infinity;
+            // let maxPitch = this.displayOptions ? this.displayOptions.max : -Infinity;
+            let minPitch = Infinity;
+            let maxPitch = -Infinity;
             pitches.forEach(function (pitch) {
                 if (pitch > maxPitch) {
                     maxPitch = pitch;
@@ -102,9 +107,11 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
                     minPitch = pitch;
                 }
             });
+
+            console.log(`${minPitch} ${maxPitch} ${typeof maxPitch}`);
             //some padding
             // minPitch -= 3;
-            // maxPitch += 3;
+            maxPitch += 3;
             let displayOptions = {
                 "min": minPitch,
                 "max": maxPitch,
@@ -112,6 +119,9 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
                 "pixelsInOnePitchUnit": Math.round(this.element.offsetHeight / (maxPitch - minPitch))
             };
             this.displayOptions = displayOptions;
+            this.displayOptionsSet = true;
+
+            console.log(this.displayOptions);
         };
 
         Score.prototype.setRangeLines = function (rangeLines) {
@@ -143,7 +153,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
                 this.intervalTree.insert([note.noteOn, note.noteOff, note]);
                 pitches.push(notes[i].midiNote);
             }
-            this.setDisplayOptions(pitches);
+            // this.setDisplayOptions(pitches);
             //set the width
             this.width = duration * this.pixelsPerSecond + window.innerWidth * 2;
             this.element.style.width = this.width;
@@ -162,7 +172,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
                 this.intervalTree.insert([note.noteOn, note.noteOff, note]);
                 pitches.push(notes[i].midiNote);
             }
-            this.setDisplayOptions(pitches);
+            // this.setDisplayOptions(pitches);
             //set the width
             this.duration += duration;
             this.width = this.duration * this.pixelsPerSecond + window.innerWidth * 2;
@@ -170,7 +180,7 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
         };
 
         /**
-         *  Resuze the drawing canvas
+         *  Resize the drawing canvas
          */
         Score.prototype.resize = function () {
             this.canvasWidth = this.canvas.offsetWidth * 2;

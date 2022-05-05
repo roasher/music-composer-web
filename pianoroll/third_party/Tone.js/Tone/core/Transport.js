@@ -189,7 +189,8 @@ function(Tone){
 		"timeSignature" : 4,
 		"loopStart" : 0,
 		"loopEnd" : "4m",
-		"PPQ" : 48
+		// this somehow affect velocity of music
+		"PPQ" : 20
 	};
 
 	///////////////////////////////////////////////////////////////////////////////

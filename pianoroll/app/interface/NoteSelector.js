@@ -26,7 +26,7 @@ define([],
         };
 
         noteSelector.prototype.saveSelectedValues = function () {
-            this.lastSavedPitch = this.voice.value;
+            this.lastSavedPitch = parseInt(this.voice.value);
         };
 
         noteSelector.prototype.voiceUp = function () {
