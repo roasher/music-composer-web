@@ -83,7 +83,10 @@ $SmallButton: $ButtonSize/2;
     z-index: 100;
 
     #keySelector {
-
+      font-size: x-large;
+      position: absolute;
+      bottom: -15px;
+      left: 10%;
     }
 
     #bachRangeSelector {
