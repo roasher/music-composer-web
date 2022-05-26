@@ -139,6 +139,7 @@ $SmallButton: $ButtonSize/2;
       }
 
       #moveAllVoicesUp {
+        visibility: visible;
         position: absolute;
         height: $SmallButton;
         width: $SmallButton;
@@ -151,6 +152,7 @@ $SmallButton: $ButtonSize/2;
       }
 
       #moveAllVoicesDown {
+        visibility: visible;
         position: absolute;
         height: $SmallButton;
         width: $SmallButton;

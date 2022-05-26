@@ -28,7 +28,7 @@ function (interfaceStyle, Panel) {
 	};
 
 	Interface.prototype.doOnRangeChange = function (cb) {
-		this._panel._composerAdjustPanel.doOnRangeChange = cb;
+		this._panel._composerAdjustPanel.bachRangeSelector.doOnRangeChange = cb;
     };
 
 	Interface.prototype.doOnKeyChange = function (cb) {

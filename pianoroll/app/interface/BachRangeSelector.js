@@ -14,7 +14,6 @@ define(["./RangeSelector", "../fileplayer/Range",],
 
             // move voices up button
             this._voiceUpButton = document.createElement("div");
-            // this._voiceUpButton.hidden = true;
             this._voiceUpButton.id = "moveAllVoicesUp";
             this._voiceUpButton.classList.add("Button");
             this._voiceUpButton.classList.add("icon-voice_up");
@@ -23,7 +22,6 @@ define(["./RangeSelector", "../fileplayer/Range",],
 
             // move voices down button
             this._voiceDonwButton = document.createElement("div");
-            // this._voiceDonwButton.hidden = true;
             this._voiceDonwButton.id = "moveAllVoicesDown";
             this._voiceDonwButton.classList.add("Button");
             this._voiceDonwButton.classList.add("icon-voice_down");
@@ -33,23 +31,18 @@ define(["./RangeSelector", "../fileplayer/Range",],
             this._rangeSelector = document.createElement("div");
             this._bachRangeSelector.appendChild(this._rangeSelector);
 
-            this.doOnConfirmAdjustment = confirmAdjustments;
+            // callbach
+            this.doOnRangeChange = function () {};
         };
 
         bachRangeSelector.prototype.allVoicesUp = function () {
             this.selectVoice.forEach(function (selectVoice) { selectVoice.rangeUp(); });
-            this.doOnConfirmAdjustment({
-                ranges: this.getRanges(),
-                key: this.getKey()
-            });
+            this.doOnRangeChange(this.getRanges());
         };
 
         bachRangeSelector.prototype.allVoicesDown = function () {
             this.selectVoice.forEach(function (selectVoice) { selectVoice.rangeDown(); });
-            this.doOnConfirmAdjustment({
-                ranges: this.getRanges(),
-                key: this.getKey()
-            });
+            this.doOnRangeChange(this.getRanges());
         };
 
         bachRangeSelector.prototype.getRanges = function () {

@@ -9,14 +9,14 @@ define(["./BachRangeSelector", "./KeySelector"],
             this.selectKey.key.addEventListener("change", this.setKey.bind(this));
 
             this.bachRangeSelector = new BachRangeSelector(this._composerAdjustPanel, "bachRangeSelector");
+
             // callbacks
-            this.doOnRangeChange = function () {};
             this.doOnKeyChange = function () {};
         };
 
         composerAdjustPanel.prototype._confirmAdjustment = function () {
             this.bachRangeSelector.saveSelectedRange();
-            this.doOnRangeChange(this.bachRangeSelector.getRanges());
+            this.bachRangeSelector.doOnRangeChange(this.bachRangeSelector.getRanges());
             this.doOnKeyChange(this.getKey());
         };
 
