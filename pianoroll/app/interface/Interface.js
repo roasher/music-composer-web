@@ -27,9 +27,13 @@ function (interfaceStyle, Panel) {
 
 	};
 
-	Interface.prototype.doOnConfirmAdjustment = function (cb) {
-		this._panel._composerAdjustPanel.doOnConfirmAdjustment = cb;
+	Interface.prototype.doOnRangeChange = function (cb) {
+		this._panel._composerAdjustPanel.doOnRangeChange = cb;
     };
+
+	Interface.prototype.doOnKeyChange = function (cb) {
+		this._panel._composerAdjustPanel.doOnKeyChange= cb;
+	};
 
 	Interface.prototype.confirmAdjustment = function () {
 		this._panel._composerAdjustPanel._confirmAdjustment();

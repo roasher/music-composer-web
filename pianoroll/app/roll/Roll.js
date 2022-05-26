@@ -81,7 +81,7 @@ function (Score, Transport, rollStyle, Scroll) {
 
 		// session
         this.sessionId = Math.floor(Math.random() * 10000000000000001);
-        this.numberOfBarsToLoad = 2;
+        this.numberOfBarsToLoad = 1;
 
 		//start the loop
 		// this._loop();
@@ -97,8 +97,12 @@ function (Score, Transport, rollStyle, Scroll) {
 	};
 
     Roll.prototype.setRangeLines = function (rangeLines) {
-        this._score.setRangeLines(rangeLines)
+        this._score.setRangeLines(rangeLines);
     };
+
+	Roll.prototype.setKey = function (key) {
+		this._score.setKey(key);
+	};
 
 	Roll.prototype._resize = function(){
 		this._width = this._scrollContainer.offsetWidth;
@@ -160,8 +164,10 @@ function (Score, Transport, rollStyle, Scroll) {
 
         let bachChoralVoiceRangeDTO = this._score.getBachChoralVoiceRangeDTO();
         console.log("Having Ranges", bachChoralVoiceRangeDTO);
+        let key = this._score.getKey();
+        console.log("Having Key", key);
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", `http://localhost:8888/getBars?compositionId=${this.sessionId}"&numberOfBars=${this.numberOfBarsToLoad}`);
+        xhr.open("POST", `http://localhost:8888/getBars?compositionId=${this.sessionId}"&numberOfBars=${this.numberOfBarsToLoad}&key=${key}`);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             this.loadNotesRequestSend = false;

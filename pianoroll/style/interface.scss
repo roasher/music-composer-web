@@ -1,171 +1,181 @@
 @import "common.scss";
 
-$ButtonSize : 80px;
+$ButtonSize: 80px;
 $ButtonMargin: 20px;
-$SmallButton : $ButtonSize/2;
+$SmallButton: $ButtonSize/2;
 
-.Button{
-	width: $ButtonSize;
-	height: $ButtonSize;
-	border-radius: 50%;
-	background-color: white;
-	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.4);
-	text-align: center;
-	font-family: sans-serif;
-	color: black;
-	cursor: pointer;
-	color: $darkGrey;
-	font-size: $ButtonSize;
-	text-align: center;
-	line-height: $ButtonSize;
-	transition: transform 0.05s ease-in;
+.Button {
+  width: $ButtonSize;
+  height: $ButtonSize;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  font-family: sans-serif;
+  color: black;
+  cursor: pointer;
+  color: $darkGrey;
+  font-size: $ButtonSize;
+  text-align: center;
+  line-height: $ButtonSize;
+  transition: transform 0.05s ease-in;
 }
 
 .Button:active {
-	transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 
 #ContextLoading {
-	z-index: 100000;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	background-color: rgba(0,0,0,0.4);
-	color: white;
-	font-size: 20px;
-	line-height: 200px;
-	font-family: sans-serif;
+  z-index: 100000;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 20px;
+  line-height: 200px;
+  font-family: sans-serif;
 }
 
-#SynthControls{
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: $SynthControlsHeight;
-	background-color: $lightGrey;
-	box-shadow: inset 0 10px 10px -10px rgba(0,0,0,0.4);
-	z-index: 111;
+#SynthControls {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: $SynthControlsHeight;
+  background-color: $lightGrey;
+  box-shadow: inset 0 10px 10px -10px rgba(0, 0, 0, 0.4);
+  z-index: 111;
 
-	.PlayPause {
-		font-size: $ButtonSize;
-		position: absolute;
-		bottom: $ButtonMargin;
-		left: 50%;
-		margin-left: -$ButtonSize/2;
-	}
+  .PlayPause {
+    font-size: $ButtonSize;
+    position: absolute;
+    bottom: $ButtonMargin;
+    left: 50%;
+    margin-left: -$ButtonSize/2;
+  }
 
-	.Button {
-		position: fixed;
-		bottom: $SynthControlsHeight / 2;
-		margin-left: -$ButtonSize / 2;
-		margin-bottom: -$ButtonSize / 2;
-		background-repeat: no-repeat;
-		text-align: center;
-		cursor: pointer;
-		left: 50%;
-	}
+  .Button {
+    position: fixed;
+    bottom: $SynthControlsHeight / 2;
+    margin-left: -$ButtonSize / 2;
+    margin-bottom: -$ButtonSize / 2;
+    background-repeat: no-repeat;
+    text-align: center;
+    cursor: pointer;
+    left: 50%;
+  }
 
-	.Button.Active {
-		background-color: $orange;
-		color: white;
-	}
+  .Button.Active {
+    background-color: $orange;
+    color: white;
+  }
 
-	#composerAdjustPanel {
-		position: absolute;
-		bottom: $SynthControlsHeight / 2;
-		left: 0px;
-		width: 10%;
-		z-index: 100;
+  #composerAdjustPanel {
+    position: absolute;
+    bottom: $SynthControlsHeight / 2;
+    left: 0px;
+    width: 10%;
+    z-index: 100;
 
-		#firstVoiceRange_upper {
-			position: absolute;
-			bottom: 3px;
-			left: 10%;
-		}
+    #keySelector {
 
-		#firstVoiceRange_lower {
-			position: absolute;
-			top: 3px;
-			left: 10%;
-		}
+    }
 
-		#secondVoiceRange_upper {
-			position: absolute;
-			bottom: 3px;
-			left: 60%;
-		}
+    #bachRangeSelector {
 
-		#secondVoiceRange_lower {
-			position: absolute;
-			top: 3px;
-			left: 60%;
-		}
+      visibility: hidden;
 
-		#altoVoiceRange_upper {
-			position: absolute;
-			bottom: 3px;
-			left: 110%;
-		}
+      #firstVoiceRange_upper {
+        position: absolute;
+        bottom: 3px;
+        left: 10%;
+      }
 
-		#altoVoiceRange_lower {
-			position: absolute;
-			top: 3px;
-			left: 110%;
-		}
+      #firstVoiceRange_lower {
+        position: absolute;
+        top: 3px;
+        left: 10%;
+      }
 
-		#bassVoiceRange_upper {
-			position: absolute;
-			bottom: 3px;
-			left: 160%;
-		}
+      #secondVoiceRange_upper {
+        position: absolute;
+        bottom: 3px;
+        left: 60%;
+      }
 
-		#bassVoiceRange_lower {
-			position: absolute;
-			top: 3px;
-			left: 160%;
-		}
+      #secondVoiceRange_lower {
+        position: absolute;
+        top: 3px;
+        left: 60%;
+      }
 
-		#moveAllVoicesUp {
-			position: absolute;
-			height: $SmallButton;
-			width: $SmallButton;
-			line-height: $SmallButton;
-			bottom: $ButtonMargin;
-			margin-left: -$SmallButton/2;
-			transition: opacity 0.2s, transform 0.05s;
-			left: 230%;
-			font-size: 20px;
-		}
+      #altoVoiceRange_upper {
+        position: absolute;
+        bottom: 3px;
+        left: 110%;
+      }
 
-		#moveAllVoicesDown {
-			position: absolute;
-			height: $SmallButton;
-			width: $SmallButton;
-			line-height: $SmallButton;
-			bottom: $ButtonMargin;
-			margin-left: -$SmallButton/2;
-			transition: opacity 0.2s, transform 0.05s;
-			left: 280%;
-			font-size: 20px;
-		}
+      #altoVoiceRange_lower {
+        position: absolute;
+        top: 3px;
+        left: 110%;
+      }
 
-	}
+      #bassVoiceRange_upper {
+        position: absolute;
+        bottom: 3px;
+        left: 160%;
+      }
 
-	$ButtonOffset : 120px;
+      #bassVoiceRange_lower {
+        position: absolute;
+        top: 3px;
+        left: 160%;
+      }
 
-	$backgroundSize : 90%;
+      #moveAllVoicesUp {
+        position: absolute;
+        height: $SmallButton;
+        width: $SmallButton;
+        line-height: $SmallButton;
+        bottom: $ButtonMargin;
+        margin-left: -$SmallButton/2;
+        transition: opacity 0.2s, transform 0.05s;
+        left: 230%;
+        font-size: 20px;
+      }
+
+      #moveAllVoicesDown {
+        position: absolute;
+        height: $SmallButton;
+        width: $SmallButton;
+        line-height: $SmallButton;
+        bottom: $ButtonMargin;
+        margin-left: -$SmallButton/2;
+        transition: opacity 0.2s, transform 0.05s;
+        left: 280%;
+        font-size: 20px;
+      }
+
+    }
+
+  }
+
+  $ButtonOffset: 120px;
+
+  $backgroundSize: 90%;
 
 }
 
-#Scrubber{
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: calc(100% - #{$SynthControlsHeight});
+#Scrubber {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: calc(100% - #{$SynthControlsHeight});
 }

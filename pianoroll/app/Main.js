@@ -27,12 +27,12 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 
 		let roll = new Roll(document.body);
 
-		let interface = new Interface(document.body);
+		let userInterface = new Interface(document.body);
 
 		/**
 		 * EVENTS
 		 */
-		interface.onPlay(function(playing){
+		userInterface.onPlay(function(playing){
 			if (playing){
 				roll.start();
 			} else {
@@ -40,9 +40,13 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 				player.releaseAll();
 			}
 		});
-		interface.doOnConfirmAdjustment(function (rangeLines) {
-			roll.setRangeLines(rangeLines);
+		userInterface.doOnRangeChange(function (range) {
+			roll.setRangeLines(range);
         });
+
+		userInterface.doOnKeyChange(function (key) {
+			roll.setKey(key);
+		});
 
 		let wasPlaying = false;
 
@@ -57,7 +61,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 			//called when stopped
 			Transport.stop();
 			roll.stop();
-			interface.stop();
+			userInterface.stop();
 		});
 		window.parent.postMessage("loaded", "*");
 
@@ -84,7 +88,7 @@ function(domReady, Roll, Player, Interface, Transport, preludeInC, preludeInCsho
 		}
 
         // ------ initializing ----------
-        interface.confirmAdjustment();
+        userInterface.confirmAdjustment();
 		roll.loadMoreNotes();
         roll._loop();
         // ------ initialization finished ----------

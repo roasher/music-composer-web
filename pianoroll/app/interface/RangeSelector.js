@@ -1,6 +1,6 @@
-define(["../fileplayer/Range", "./NoteSelector"],
-    function (Range, NoteSelector) {
-        var rangeSelector = function (container, id, defaultRange, partNumber) {
+define(["./NoteSelector"],
+    function (NoteSelector) {
+        let rangeSelector = function (container, id, defaultRange, partNumber) {
             this.upperVoiceSelector = new NoteSelector(container, id + "_upper", defaultRange.upperNote);
             this.lowerVoiceSelector = new NoteSelector(container, id + "_lower", defaultRange.lowerNote);
             this.partNumber = partNumber;

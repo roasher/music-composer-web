@@ -62,6 +62,10 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
              */
             this.rangeLines = [];
             /**
+             * Key to compose in
+             */
+            this.key = "C_MAJOR";
+            /**
              * The canvas which notes are drawn to
              * @type {Element}
              */
@@ -122,6 +126,10 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             this.displayOptionsSet = true;
 
             console.log(this.displayOptions);
+        };
+
+        Score.prototype.setKey = function (key) {
+            this.key = key;
         };
 
         Score.prototype.setRangeLines = function (rangeLines) {
@@ -307,6 +315,10 @@ define(["roll/Note", "interval-tree-1d", "style/roll.scss", "roll/RangeLine"],
             top *=  this.displayOptions.pixelsInOnePitchUnit - 2;
             top = top * 2;
             return top;
+        };
+
+        Score.prototype.getKey = function () {
+            return this.key;
         };
 
         Score.prototype.getBachChoralVoiceRangeDTO = function () {
