@@ -21,4 +21,4 @@ RUN npm install sass-loader@1.0.4
 
 RUN node_modules/webpack/bin/webpack.js -d
 
-ENTRYPOINT node_modules/webpack-dev-server/bin/webpack-dev-server.js
+ENTRYPOINT node_modules/http-server/bin/http-server

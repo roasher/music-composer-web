@@ -1,6 +1,0 @@
-services:
-  music-composer-web:
-    image: music-web
-    build: .
-    ports:
-      - "8080:8080"
