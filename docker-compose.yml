@@ -2,6 +2,6 @@ version: "3.8"
 
 services:
   music-composer-web-front:
-    image: roasher/ru.yurkins-workshop.music-composer-web:0.0.2
+    image: roasher/ru.yurkins-workshop.music-composer-web:0.0.3
     ports:
       - "8080:8080"

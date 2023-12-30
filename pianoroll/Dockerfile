@@ -9,15 +9,13 @@ RUN apt install build-essential -y
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && \
     source /root/.bashrc &&  \
-    nvm install 8.10.0
+    nvm install lts/carbon
 
 COPY . piano-roll
 WORKDIR piano-roll
 
 RUN npm install
-RUN npm install sass-loader@1.0.4
-#RUN npm uninstall --save-dev node-sass@4.14.1
-#RUN npm install --save-dev node-sass@4.14.1
+RUN npm rebuild node-sass
 
 RUN node_modules/webpack/bin/webpack.js -d
 
