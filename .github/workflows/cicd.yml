@@ -2,6 +2,10 @@ name: CI/CD
 
 on: workflow_dispatch
 
+defaults:
+  run:
+    working-directory: pianoroll
+
 jobs:
   build-and-push:
     name: Build and push docker image
@@ -18,5 +22,4 @@ jobs:
 
       - name: Build image
         run: |
-          ls -la
           bash pianoroll/build_push.bash
