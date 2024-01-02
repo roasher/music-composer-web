@@ -12,6 +12,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_LOGIN }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
       - name: Build image
         run: |
+          ls -la
           bash pianoroll/build_push.bash
