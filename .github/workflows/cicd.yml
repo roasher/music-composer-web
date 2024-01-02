@@ -22,4 +22,4 @@ jobs:
 
       - name: Build image
         run: |
-          bash pianoroll/build_push.bash
+          bash build_push.bash
