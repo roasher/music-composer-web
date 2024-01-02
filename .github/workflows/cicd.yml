@@ -1,0 +1,17 @@
+name: CI/CD
+
+on: workflow_dispatch
+
+jobs:
+  build-and-push:
+    name: Build and push docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKERHUB_LOGIN }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build image
+        run: |
+          bash pianoroll/build_push.bash
