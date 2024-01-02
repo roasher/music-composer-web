@@ -167,7 +167,7 @@ function (Score, Transport, rollStyle, Scroll) {
         let key = this._score.getKey();
         console.log("Having Key", key);
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", `http://localhost:8888/getBars?compositionId=${this.sessionId}"&numberOfBars=${this.numberOfBarsToLoad}&key=${key}`);
+        xhr.open("POST", `http://${window.location.hostname}:8888/getBars?compositionId=${this.sessionId}&numberOfBars=${this.numberOfBarsToLoad}&key=${key}`);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
             this.loadNotesRequestSend = false;
