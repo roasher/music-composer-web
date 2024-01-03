@@ -2,21 +2,21 @@ define([],
     function () {
         var keySelector = function (container, id, defaultKey) {
             this.keys = [
-                "C_MAJOR",
-                "G_MAJOR",
-                "D_MAJOR",
-                "A_MAJOR",
-                "E_MAJOR",
-                "B_MAJOR",
-                "F_SHARP_MAJOR",
-                "C_SHARP_MAJOR",
-                "F_MAJOR",
-                "B_FLAT_MAJOR",
-                "E_FLAT_MAJOR",
-                "A_FLAT_MAJOR",
-                "D_FLAT_MAJOR",
-                "G_FLAT_MAJOR",
-                "C_FLAT_MAJOR",
+                ["C", "C_MAJOR"],
+                ["G", "G_MAJOR"],
+                ["D", "D_MAJOR"],
+                ["A", "A_MAJOR"],
+                ["E", "E_MAJOR"],
+                ["B", "B_MAJOR"],
+                ["F#", "F_SHARP_MAJOR"],
+                ["C#", "C_SHARP_MAJOR"],
+                ["F", "F_MAJOR"],
+                ["Bb", "B_FLAT_MAJOR"],
+                ["Eb", "E_FLAT_MAJOR"],
+                ["Ab", "A_FLAT_MAJOR"],
+                ["Db", "D_FLAT_MAJOR"],
+                ["Gb", "G_FLAT_MAJOR"],
+                ["Cb", "C_FLAT_MAJOR"],
             ];
 
             this.key = document.createElement("select");
@@ -25,8 +25,8 @@ define([],
             container.appendChild(this.key);
             for (let keyNumber = 0; keyNumber < this.keys.length; keyNumber++) {
                 let option = document.createElement("option");
-                option.value = this.keys[keyNumber];
-                option.text = this.keys[keyNumber];
+                option.value = this.keys[keyNumber][1];
+                option.text = this.keys[keyNumber][0];
                 if (option.value === defaultKey) {
                     option.selected = true;
                 }
